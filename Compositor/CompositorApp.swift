@@ -38,9 +38,9 @@ struct CompositorApp: App {
                         }
                             .configuredKeyboardShortcut("z", modifiers: [.command, .shift])
                     } else {
-                        Button(session.history.canUndo ? String(format: loc("Undo %@"), session.history.undoName) : loc("Undo")) { session.undo() }
+                        Button(session.history.canUndo ? String(format: loc("Undo %@"), loc(session.history.undoName)) : loc("Undo")) { session.undo() }
                             .configuredKeyboardShortcut("z").disabled(!session.canUndo)
-                        Button(session.history.canRedo ? String(format: loc("Redo %@"), session.history.redoName) : loc("Redo")) { session.redo() }
+                        Button(session.history.canRedo ? String(format: loc("Redo %@"), loc(session.history.redoName)) : loc("Redo")) { session.redo() }
                             .configuredKeyboardShortcut("z", modifiers: [.command, .shift]).disabled(!session.canRedo)
                     }
                 }
@@ -345,7 +345,7 @@ struct CompositorApp: App {
                     Button("Move Layer Down") { session.moveActiveLayer(by: -1) }
                         .configuredKeyboardShortcut("[").disabled(!session.canMoveActiveLayer(by: -1))
                     Group {
-                        Button(session.mergeTitle) { session.mergeLayers() }
+                        Button(loc(session.mergeTitle)) { session.mergeLayers() }
                             .configuredKeyboardShortcut("e").disabled(!session.canMergeLayers)
                         Divider()
                         Button("Flip Layer Horizontal") { session.flipLayers(horizontally: true) }

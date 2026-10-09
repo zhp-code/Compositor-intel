@@ -101,6 +101,16 @@
         }
       }
     },
+    "Add Hide-All Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加全部隐藏蒙版"
+          }
+        }
+      }
+    },
     "Add Layer Mask": {
       "localizations": {
         "zh-Hans": {
@@ -157,6 +167,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "添加杂色"
+          }
+        }
+      }
+    },
+    "Add Reveal-All Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加全部显示蒙版"
           }
         }
       }
@@ -737,6 +757,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "画笔"
+          }
+        }
+      }
+    },
+    "Brush Stroke": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画笔描边"
           }
         }
       }
@@ -1461,6 +1491,26 @@
         }
       }
     },
+    "Copy Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复制图层蒙版"
+          }
+        }
+      }
+    },
+    "Copy Layers from Project": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从项目复制图层"
+          }
+        }
+      }
+    },
     "Copy Merged": {
       "localizations": {
         "zh-Hans": {
@@ -1711,7 +1761,37 @@
         }
       }
     },
+    "Delete Guide": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除参考线"
+          }
+        }
+      }
+    },
     "Delete Layer": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除图层"
+          }
+        }
+      }
+    },
+    "Delete Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除图层蒙版"
+          }
+        }
+      }
+    },
+    "Delete Layers": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
@@ -1821,6 +1901,16 @@
         }
       }
     },
+    "Disable Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停用图层蒙版"
+          }
+        }
+      }
+    },
     "Disable Mask": {
       "localizations": {
         "zh-Hans": {
@@ -1837,6 +1927,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "距离"
+          }
+        }
+      }
+    },
+    "Distort": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扭曲"
+          }
+        }
+      }
+    },
+    "Distort Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扭曲图层蒙版"
+          }
+        }
+      }
+    },
+    "Distort Layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扭曲图层"
           }
         }
       }
@@ -1897,6 +2017,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "完成"
+          }
+        }
+      }
+    },
+    "Don’t Save": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不保存"
           }
         }
       }
@@ -2071,6 +2201,16 @@
         }
       }
     },
+    "Duplicate Layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复制图层"
+          }
+        }
+      }
+    },
     "Edge": {
       "localizations": {
         "zh-Hans": {
@@ -2167,6 +2307,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "空选区"
+          }
+        }
+      }
+    },
+    "Enable Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用图层蒙版"
           }
         }
       }
@@ -2401,6 +2551,16 @@
         }
       }
     },
+    "Fill Text": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "填充文本"
+          }
+        }
+      }
+    },
     "Fill the selection using surrounding pixels from this layer.": {
       "localizations": {
         "zh-Hans": {
@@ -2511,6 +2671,16 @@
         }
       }
     },
+    "Flip Horizontal": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "水平翻转"
+          }
+        }
+      }
+    },
     "Flip Layer Horizontal": {
       "localizations": {
         "zh-Hans": {
@@ -2532,6 +2702,16 @@
       }
     },
     "Flip V": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "垂直翻转"
+          }
+        }
+      }
+    },
+    "Flip Vertical": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
@@ -2781,6 +2961,16 @@
         }
       }
     },
+    "Group Layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编组图层"
+          }
+        }
+      }
+    },
     "Group Selected Layers": {
       "localizations": {
         "zh-Hans": {
@@ -3007,6 +3197,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "隐藏其他"
+          }
+        }
+      }
+    },
+    "Hide Selection": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隐藏选区"
           }
         }
       }
@@ -3351,12 +3551,42 @@
         }
       }
     },
+    "Import Image": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入图像"
+          }
+        }
+      }
+    },
+    "Import Images": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入图像"
+          }
+        }
+      }
+    },
     "Import Images…": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "导入图像…"
+          }
+        }
+      }
+    },
+    "Import Photoshop File": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入 Photoshop 文件"
           }
         }
       }
@@ -3511,6 +3741,16 @@
         }
       }
     },
+    "Invert Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "反相蒙版"
+          }
+        }
+      }
+    },
     "Keep the source moving with the brush between strokes; off starts every stroke at the source point": {
       "localizations": {
         "zh-Hans": {
@@ -3567,6 +3807,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "图层"
+          }
+        }
+      }
+    },
+    "Layer Blend Mode": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图层混合模式"
+          }
+        }
+      }
+    },
+    "Layer Opacity": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图层不透明度"
           }
         }
       }
@@ -3847,6 +4107,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "线"
+          }
+        }
+      }
+    },
+    "Link Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "链接图层蒙版"
           }
         }
       }
@@ -4381,6 +4651,26 @@
         }
       }
     },
+    "Move Guide": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移动参考线"
+          }
+        }
+      }
+    },
+    "Move Layer": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移动图层"
+          }
+        }
+      }
+    },
     "Move Layer Down": {
       "localizations": {
         "zh-Hans": {
@@ -4407,6 +4697,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "移出文件夹"
+          }
+        }
+      }
+    },
+    "Move Selection": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移动选区"
           }
         }
       }
@@ -4491,12 +4791,42 @@
         }
       }
     },
+    "New Canvas": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建画布"
+          }
+        }
+      }
+    },
     "New Canvas…": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "新建画布…"
+          }
+        }
+      }
+    },
+    "New Folder": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建文件夹"
+          }
+        }
+      }
+    },
+    "New Guide": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建参考线"
           }
         }
       }
@@ -4907,6 +5237,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "绘画"
+          }
+        }
+      }
+    },
+    "Paint Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "绘制蒙版"
           }
         }
       }
@@ -5531,6 +5871,16 @@
         }
       }
     },
+    "Redo %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重做 %@"
+          }
+        }
+      }
+    },
     "Reds": {
       "localizations": {
         "zh-Hans": {
@@ -5641,6 +5991,16 @@
         }
       }
     },
+    "Rename Layer": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重命名图层"
+          }
+        }
+      }
+    },
     "Rename Layer…": {
       "localizations": {
         "zh-Hans": {
@@ -5657,6 +6017,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "重命名…"
+          }
+        }
+      }
+    },
+    "Reorder Layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重新排序图层"
+          }
+        }
+      }
+    },
+    "Replace Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "替换图层蒙版"
           }
         }
       }
@@ -5757,6 +6137,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "全部显示（白色）"
+          }
+        }
+      }
+    },
+    "Reveal Selection": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示选区"
           }
         }
       }
@@ -5981,6 +6371,16 @@
         }
       }
     },
+    "Save changes to %@?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "是否保存对 %@ 的更改？"
+          }
+        }
+      }
+    },
     "Scale": {
       "localizations": {
         "zh-Hans": {
@@ -6057,6 +6457,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择"
+          }
+        }
+      }
+    },
+    "Select All": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全选"
           }
         }
       }
@@ -7061,12 +7471,52 @@
         }
       }
     },
+    "Transform Layer": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "变换图层"
+          }
+        }
+      }
+    },
+    "Transform Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "变换图层蒙版"
+          }
+        }
+      }
+    },
+    "Transform Layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "变换图层"
+          }
+        }
+      }
+    },
     "Transform Mask": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "变换蒙版"
+          }
+        }
+      }
+    },
+    "Transform Selection": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "变换选区"
           }
         }
       }
@@ -7161,6 +7611,16 @@
         }
       }
     },
+    "Undo %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "撤销 %@"
+          }
+        }
+      }
+    },
     "Ungroup Layers": {
       "localizations": {
         "zh-Hans": {
@@ -7201,6 +7661,16 @@
         }
       }
     },
+    "Unlink Layer Mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消链接图层蒙版"
+          }
+        }
+      }
+    },
     "Unlink Mask": {
       "localizations": {
         "zh-Hans": {
@@ -7217,6 +7687,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "未存储的更改"
+          }
+        }
+      }
+    },
+    "Untitled": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未命名"
           }
         }
       }
@@ -7557,6 +8037,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "黄色"
+          }
+        }
+      }
+    },
+    "Your changes will be lost if you don’t save them.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果不保存，你的更改将会丢失。"
           }
         }
       }
