@@ -65,7 +65,7 @@ brew install --cask robbietilton-compositor
 - Camera Raw filter: light, color, curves, color mixer, color grading, detail, optics and geometry, in a panel beside the canvas
 - Levels (with Auto), Curves, Hue/Saturation, Exposure, Gradient Map, Grain, Black & White, Color Balance and Invert
 - Gaussian Blur and Motion Blur that spread past a layer's edges
-- Add Noise, Vignette, Bloom / Glow, Tonal Contrast, Lens Correction and Remove Background
+- Add Noise, Vignette, Bloom / Glow, Dither, Scanlines, Tonal Contrast, Lens Correction and Remove Background
 - Live previews, limited to the selection when there is one
 - Last Filter (⌃⌘F) runs the last filter again with the same settings
 
@@ -76,10 +76,11 @@ brew install --cask robbietilton-compositor
 - Rulers (⌘R), guides dragged from them, a layout grid with adjustable spacing and subdivisions, and Snap To for guides, grid, layers and document bounds
 - Crop with snapping, ratios including 3:4 and 9:16, and Option for symmetric cropping; with a selection, the crop starts at it
 - Canvas Size, Image Size and Trim
+- A Navigator minimap in the canvas's corner from 300% zoom: the whole document in small with a box around the view; click or drag to move there (View › Navigator)
 - Sharp high-quality downsampling when zoomed out, and a pixel grid when zoomed in
 - Import JPEG, PNG, HEIC, TIFF, SVG, camera RAW (with a develop step first) and Photoshop PSD and PSB (8-bit RGB; not CMYK). Photoshop folders, masks, blend modes, fill rectangles/ellipses, and simple horizontal text stay editable; other vectors and vertical text become pixels. A conversion report is shown before anything is applied.
 - Large documents: the memory budget scales with your Mac, and a Photoshop file too big to open has its layers cropped to the canvas instead
-- Export JPEG with a live preview (⇧⌥⌘S); Copy Merged
+- Export PNG (⇧⌘E), Export JPEG (⇧⌥⌘S), and Export As (⇧⌥⌘W) for PNG, JPEG or a one-page PDF at the print size, scaled if you like, with a live preview, JPEG quality and file size; Copy Merged
 - Keep working while a project saves
 - Photoshop-style keyboard shortcuts throughout, remappable in Edit > Keyboard Shortcuts
 - Drag a number's label to scrub its value, as in Photoshop
@@ -98,6 +99,10 @@ brew install --cask robbietilton-compositor
 界面语言跟随 macOS 系统语言。若要在英文系统中单独把 Compositor 设为中文，请在“系统设置 › 通用 › 语言与地区 › 应用程序”里为 Compositor 选择“简体中文”，然后重启应用。翻译覆盖菜单、面板、工具栏、悬停提示、滤镜/调整图层/混合模式/形状/对齐等动态枚举标签，以及 AppKit 直接绘制的下拉与工具提示。品牌名 Compositor、专有名词与快捷键字母保留原文。术语参考了 Adobe Photoshop 简体中文界面（色阶、曲线、仿制图章、羽化、正片叠底 等）。
 
 The interface follows the macOS system language. To pin Compositor to Chinese on an English system, open System Settings › General › Language & Region › Applications and add Compositor with 简体中文, then relaunch. Translation covers menus, panels, toolbars, hover help, dynamic enum labels (filters, adjustments, blend modes, shapes, alignment) and AppKit-drawn pop-ups and tooltips. The brand name, shortcuts and file extensions stay in their original form; terminology matches the Chinese Photoshop UI.
+
+## Translations
+
+Compositor is English only for now, and translation pull requests aren't being accepted. It's maintained by one person, every new string would need translating from then on, and translations in languages I don't read can't be reviewed. I'll revisit this once the app settles; until then, please don't open localization PRs.
 
 ## Building
 

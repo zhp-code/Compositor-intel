@@ -471,6 +471,16 @@
         }
       }
     },
+    "Background": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景"
+          }
+        }
+      }
+    },
     "Background for transparency": {
       "localizations": {
         "zh-Hans": {
@@ -1051,6 +1061,16 @@
         }
       }
     },
+    "Click or drag to move the view": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点击或拖动以移动视图"
+          }
+        }
+      }
+    },
     "Click the canvas to sample": {
       "localizations": {
         "zh-Hans": {
@@ -1307,6 +1327,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "颜色平滑度"
+          }
+        }
+      }
+    },
+    "Color Split": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "色彩分离"
           }
         }
       }
@@ -1921,6 +1951,16 @@
         }
       }
     },
+    "Displace": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位移"
+          }
+        }
+      }
+    },
     "Distance": {
       "localizations": {
         "zh-Hans": {
@@ -2431,6 +2471,46 @@
         }
       }
     },
+    "Export %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导出 %@"
+          }
+        }
+      }
+    },
+    "Export As": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导出为"
+          }
+        }
+      }
+    },
+    "Export As…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导出为…"
+          }
+        }
+      }
+    },
+    "Export Background": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导出背景"
+          }
+        }
+      }
+    },
     "Export JPEG": {
       "localizations": {
         "zh-Hans": {
@@ -2447,6 +2527,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "导出 JPEG…"
+          }
+        }
+      }
+    },
+    "Export PDF…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导出 PDF…"
           }
         }
       }
@@ -2757,6 +2847,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "前景到透明"
+          }
+        }
+      }
+    },
+    "Format": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "格式"
           }
         }
       }
@@ -3107,6 +3207,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "高度"
+          }
+        }
+      }
+    },
+    "Height in pixels; the width follows, keeping the proportions": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "高度（像素）；宽度按比例自动调整"
           }
         }
       }
@@ -4751,6 +4861,26 @@
         }
       }
     },
+    "Navigator": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导航器"
+          }
+        }
+      }
+    },
+    "Navigator (300% and above)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导航器（300% 及以上）"
+          }
+        }
+      }
+    },
     "Nearest": {
       "localizations": {
         "zh-Hans": {
@@ -5227,6 +5357,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "叠加"
+          }
+        }
+      }
+    },
+    "Page": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "页面"
           }
         }
       }
@@ -6391,12 +6531,32 @@
         }
       }
     },
+    "Scale the export: the document stays as it is": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "缩放导出尺寸：文档本身保持不变"
+          }
+        }
+      }
+    },
     "Scale width and height together, about the center": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "以中心为基准同时缩放宽度和高度"
+          }
+        }
+      }
+    },
+    "Scanlines": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扫描线"
           }
         }
       }
@@ -7331,6 +7491,16 @@
         }
       }
     },
+    "Thickness": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "粗细"
+          }
+        }
+      }
+    },
     "This Layer": {
       "localizations": {
         "zh-Hans": {
@@ -7517,6 +7687,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "变换选区"
+          }
+        }
+      }
+    },
+    "Transparency kept · sRGB": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留透明度 · sRGB"
           }
         }
       }
@@ -7981,6 +8161,16 @@
         }
       }
     },
+    "Width in pixels; the height follows, keeping the proportions": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宽度（像素）；高度按比例自动调整"
+          }
+        }
+      }
+    },
     "Window": {
       "localizations": {
         "zh-Hans": {
@@ -8101,6 +8291,16 @@
         }
       }
     },
+    "Zoom in (⌘+), now %@. At 100% each pixel of the export is one pixel of the screen": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "放大 (⌘+)，当前 %@。在 100% 时，导出的每个像素对应屏幕上的一个像素"
+          }
+        }
+      }
+    },
     "Zoom out (⌘−)": {
       "localizations": {
         "zh-Hans": {
@@ -8177,6 +8377,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "像素/英寸"
+          }
+        }
+      }
+    },
+    "sRGB": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sRGB"
           }
         }
       }
