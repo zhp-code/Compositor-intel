@@ -1,5 +1,13 @@
 # Compositor
 
+> **关于本分支 / About this fork**  
+> 本仓库是从 [robbietilton/Compositor](https://github.com/robbietilton/Compositor) 派生的分支，相对上游做了两处主要改动：  
+> 1. **支持 Intel 芯片** — 上游仅面向 Apple silicon，本分支已调整构建配置，可在 Intel Mac 上编译与运行。  
+> 2. **简体中文界面** — 新增 `zh-Hans` String Catalog，跟随 macOS 系统语言自动切换。在系统偏好设置 > 通用 > 语言与地区 > 应用程序中，也可单独把 Compositor 指定为中文。  
+> 详细要求见下方 Requirements 章节。  
+>  
+> This fork of [robbietilton/Compositor](https://github.com/robbietilton/Compositor) adds **Intel Mac support** (upstream is Apple-silicon only) and a **Simplified Chinese (zh-Hans) interface** that follows the system language. See *Requirements* below.
+
 Adobe Photoshop costs too much and tools like GIMP don’t feel familiar enough for me to stay in flow. That’s why I built Compositor.
 
 The goal was to create a full-featured image editor that is completely free and open source. I used to use Photoshop for compositing and post-processing, so Compositor is built around that workflow - with the tools needed to create a pixel-perfect final image.
@@ -82,8 +90,14 @@ brew install --cask robbietilton-compositor
 
 ## Requirements
 
-- macOS 26.0 or later on a Mac with Apple silicon
-- Xcode 26 or later (to build from source)
+- macOS 26.0 或更高，**Apple silicon 或 Intel** Mac / macOS 26.0 or later on an Apple silicon **or Intel** Mac
+- Xcode 26 或更高（从源码构建时）/ Xcode 26 or later (to build from source)
+
+### 中文界面 / Simplified Chinese UI
+
+界面语言跟随 macOS 系统语言。若要在英文系统中单独把 Compositor 设为中文，请在“系统设置 › 通用 › 语言与地区 › 应用程序”里为 Compositor 选择“简体中文”，然后重启应用。翻译覆盖菜单、面板、工具栏、悬停提示、滤镜/调整图层/混合模式/形状/对齐等动态枚举标签，以及 AppKit 直接绘制的下拉与工具提示。品牌名 Compositor、专有名词与快捷键字母保留原文。术语参考了 Adobe Photoshop 简体中文界面（色阶、曲线、仿制图章、羽化、正片叠底 等）。
+
+The interface follows the macOS system language. To pin Compositor to Chinese on an English system, open System Settings › General › Language & Region › Applications and add Compositor with 简体中文, then relaunch. Translation covers menus, panels, toolbars, hover help, dynamic enum labels (filters, adjustments, blend modes, shapes, alignment) and AppKit-drawn pop-ups and tooltips. The brand name, shortcuts and file extensions stay in their original form; terminology matches the Chinese Photoshop UI.
 
 ## Building
 

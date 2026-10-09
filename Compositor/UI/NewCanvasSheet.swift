@@ -147,8 +147,8 @@ struct NewCanvasSheet: View {
             }
             .font(.callout).foregroundStyle(.secondary)
             if !valid {
-                Text(unit == .pixels ? "Enter whole numbers from 1 to \(DocumentLimits.maxSide.formatted()) pixels."
-                                     : "Enter a size up to \(DocumentLimits.maxSide.formatted()) pixels at this DPI.")
+                Text(unit == .pixels ? String(format: loc("Enter whole numbers from 1 to %@ pixels."), DocumentLimits.maxSide.formatted())
+                                     : String(format: loc("Enter a size up to %@ pixels at this DPI."), DocumentLimits.maxSide.formatted()))
                     .font(.callout).foregroundStyle(.orange)
             }
             HStack(spacing: 10) {
@@ -207,7 +207,7 @@ struct NewCanvasSheet: View {
                 TextField(title, text: text).textFieldStyle(.plain)
                     .focused($focusedField, equals: field)
                     .accessibilityIdentifier(title.lowercased() + "Input")
-                Text(unit.rawValue).foregroundStyle(.secondary)
+                Text(unit.displayName).foregroundStyle(.secondary)
             }
             .padding(12).background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 7))
         }
@@ -223,14 +223,14 @@ private struct CyclePill: View {
     init(_ title: String, help: String, action: @escaping () -> Void) { self.title = title; self.help = help; self.action = action }
     var body: some View {
         Button(action: action) {
-            Text(title).foregroundStyle(.secondary).monospacedDigit()
+            Text(loc(title)).foregroundStyle(.secondary).monospacedDigit()
                 .padding(.horizontal, 6).padding(.vertical, 2)
                 .background(.quaternary.opacity(hovering ? 1 : 0), in: Capsule())
                 .contentShape(Capsule())
         }
         .buttonStyle(.plain)
         .onHover { hovering = $0 }
-        .help(help)
+        .help(loc(help))
     }
 }
 

@@ -71,8 +71,15 @@ struct CommandPaletteView: View {
 @MainActor
 final class CommandPaletteController {
     static let shared = CommandPaletteController()
-    /// Left out of the palette: the palette itself and the system menus.
-    static let skipped: Set<String> = ["Search Commands…", "Window", "Help", "Services"]
+    /// Left out of the palette: the palette itself and the system menus. SwiftUI translates standard menu
+    /// titles (Window, Help, Services) via Apple's own catalogs, so a Chinese system sees them as 窗口/帮助/服务.
+    /// Both forms are listed here so the palette skips whichever macOS shows.
+    static let skipped: Set<String> = [
+        "Search Commands…", loc("Search Commands…"),
+        "Window", loc("Window"), "窗口",
+        "Help", loc("Help"), "帮助",
+        "Services", loc("Services"), "服务"
+    ]
 
     private(set) var panel: PalettePanel?
     private weak var window: NSWindow?

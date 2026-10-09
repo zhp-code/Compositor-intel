@@ -252,7 +252,7 @@ struct ContentView: View {
         .onChange(of: session.selectionAmountOperation) { _, operation in
             if let operation {
                 selectionAmountPanel.onClose = { session.selectionAmountOperation = nil }
-                selectionAmountPanel.show(title: operation.rawValue + " Selection",
+                selectionAmountPanel.show(title: loc(operation.rawValue) + " " + loc("Selection"),
                     content: SelectionAmountSheet(session: session, operation: operation))
             } else { selectionAmountPanel.close() }
         }
@@ -262,7 +262,7 @@ struct ContentView: View {
             else {
                 filterPanel.onClose = { session.cancelFilter() }
                 let placement: FloatingPanelPlacement = session.filterEdit?.kind == .cameraRaw ? .dockedToMainWindowRight : .automatic
-                filterPanel.show(title: session.filterEdit?.kind.rawValue ?? "Filter", content: FilterSheet(session: session),
+                filterPanel.show(title: session.filterEdit.map { loc($0.kind.rawValue) } ?? loc("Filter"), content: FilterSheet(session: session),
                                  placement: placement)
             }
         }
