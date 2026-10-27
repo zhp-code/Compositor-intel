@@ -5,8 +5,9 @@
 > 1. **支持 Intel 芯片** — 上游仅面向 Apple silicon，本分支已调整构建配置，可在 Intel Mac 上编译与运行。  
 > 2. **简体中文界面** — 新增 `zh-Hans` String Catalog，跟随 macOS 系统语言自动切换。在系统偏好设置 > 通用 > 语言与地区 > 应用程序中，也可单独把 Compositor 指定为中文。  
 > 详细要求见下方 Requirements 章节。  
+> 完整改动清单与维护指南（新增界面如何做本地化、如何合并上游、如何构建 Intel 包）见 [docs/fork-intel-and-chinese.md](docs/fork-intel-and-chinese.md)。  
 >  
-> This fork of [robbietilton/Compositor](https://github.com/robbietilton/Compositor) adds **Intel Mac support** (upstream is Apple-silicon only) and a **Simplified Chinese (zh-Hans) interface** that follows the system language. See *Requirements* below.
+> This fork of [robbietilton/Compositor](https://github.com/robbietilton/Compositor) adds **Intel Mac support** (upstream is Apple-silicon only) and a **Simplified Chinese (zh-Hans) interface** that follows the system language. See *Requirements* below, and [docs/fork-intel-and-chinese.md](docs/fork-intel-and-chinese.md) for the full maintenance guide.
 
 Adobe Photoshop costs too much and tools like GIMP don’t feel familiar enough for me to stay in flow. That’s why I built Compositor.
 
