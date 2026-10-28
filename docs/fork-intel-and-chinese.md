@@ -80,7 +80,7 @@ xcodebuild build \
 | `project.pbxproj` → 各 build settings | `LOCALIZATION_PREFERS_STRING_CATALOGS = YES`、`SWIFT_EMIT_LOC_STRINGS = YES` | 启用 String Catalog、自动抽取 SwiftUI 字面量 |
 | `Config/Info.plist` | `CFBundleLocalizations = [en, zh-Hans]` | 让系统识别 app 支持中文 |
 | `Compositor/Localization.swift` | 新增 | 提供 `loc()` 与 `displayName`（见下） |
-| `Compositor/Localizable.xcstrings` | 新增（约 1070 条） | 英文 key → 各语言译文 |
+| `Compositor/Localizable.xcstrings` | 新增（1117 条 key，1106 条有中文） | 英文 key → 各语言译文 |
 
 `Localization.swift` 全文：
 
@@ -175,7 +175,7 @@ Camera Raw、LUT）、以及由 Apple 系统自行翻译的标准菜单（View /
 
 ### 2.7 已合并到上游 v1.5.12
 
-上游从 1.4.8 到 1.5.12 加了很多新界面，本分支合并时已一并本地化（catalog 由 840 条增至 1070 条）。
+上游从 1.4.8 到 1.5.12 加了很多新界面，本分支合并时已一并本地化（catalog 由 840 条增至 1117 条）。
 新增面与处理方式：
 
 | 功能 | 涉及界面 | 处理 |
@@ -230,18 +230,69 @@ grep -rnE '^(<<<<<<<|>>>>>>>|=======$)' Compositor --include='*.swift'   # 无�
 
 ## 四、构建与验证
 
-- **有 Xcode 的机器**：
-  ```sh
-  xcodebuild -project Compositor.xcodeproj -scheme Compositor -destination 'platform=macOS' build
-  ```
-- **只有命令行工具（无完整 Xcode）时**，至少做语法与数据校验（不能替代类型检查）：
-  ```sh
-  swiftc -parse <改动的.swift 文件>          # 语法层
-  python3 -c "import json; json.load(open('Compositor/Localizable.xcstrings'))"   # catalog 合法性
-  ```
-  真正的类型检查 / 链接要靠 CI 或装有 Xcode 的机器。
-- **CI**：推送后由 `.github/workflows/build-intel.yml` 构建通用 `.dmg`（见 1.3），
-  在 Actions 页面下载 artifact。
+### 4.1 用 Xcode 图形界面（没写过代码也能做）
+
+1. 打开 `/Applications/Xcode.app`。首次启动要点同意协议、安装附加组件。
+2. 菜单 **File › Open…**（或直接双击）选仓库根目录的 `Compositor.xcodeproj`。
+3. 确认窗口左上角两处：scheme 是 **Compositor**，运行目标是 **My Mac**。
+4. **先把构建配置切成 Release**：菜单 **Product › Scheme › Edit Scheme… › Run ›
+   Build Configuration** 选 `Release`。原因见下面的签名坑。
+5. 菜单 **Product › Build**（⌘B）编译；**Product › Run**（⌘R）编译并启动。
+
+产物在左侧导航栏最下方的 **Products › Compositor.app**，右键 **Show in Finder** 即可拖到
+`/Applications`。
+
+> **签名坑（必读）**：`project.pbxproj` 里 Debug 配置是 `CODE_SIGN_STYLE = Automatic` 且
+> `DEVELOPMENT_TEAM = 3E4X3B9Z9T`（上游作者的团队 ID）。你的账号里没有这个团队，Debug 构建会报
+> *Signing for "Compositor" requires a development team*。Release 配置是
+> `CODE_SIGN_IDENTITY = "-"`（ad-hoc，本地能直接运行），所以选 Release 最省事。
+> 若一定要用 Debug：选中 target › **Signing & Capabilities** › 取消
+> **Automatically manage signing**，把 Signing Certificate 设为 **Sign to Run Locally**。
+
+### 4.2 用终端（1.2 的命令 + 跳过签名，可脚本化）
+
+```sh
+xcodebuild build \
+  -project Compositor.xcodeproj \
+  -scheme Compositor \
+  -configuration Release \
+  -destination 'platform=macOS' \
+  ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+  CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+```
+
+- `CODE_SIGNING_ALLOWED=NO` 跳过签名，免得本地没证书就报错；要运行的话补一次 ad-hoc 签名：
+  `codesign --force --deep --sign - Compositor.app`
+- 加 `-derivedDataPath ./.build-dd` 把中间产物留在仓库内，好清理。
+- 只看关键行：`… 2>&1 | grep -E "error:|BUILD (SUCCEEDED|FAILED)"`
+
+### 4.3 CI（连 Xcode 都不需要装）
+
+两个工作流，触发条件不同：
+
+| 工作流 | 触发条件 | 干什么 | 实测耗时 |
+| --- | --- | --- | --- |
+| `verify.yml` | 任意 push / PR | 编译 + 跑单测和 UI 测试 | 约 5 分钟 |
+| `build-intel.yml` | **只** `intel-build` 分支的 push，或手动 dispatch | 通用 Release 构建 → `lipo` 断言双架构 → ad-hoc 签名 → 打 `.dmg` | 约 9 分钟 |
+
+推送方式决定拿到什么：
+
+```sh
+git push origin main                          # 只跑测试，确认能编译、测试通过
+git push origin main:refs/heads/intel-build   # 额外产出通用 DMG
+```
+
+产物在 **Actions › 对应那次 run › 页面底部 Artifacts › Compositor-universal-dmg**，
+保留 30 天，下载需登录 GitHub。`.dmg` 未公证，首次打开按 1.4 处理。
+
+### 4.4 不开 Xcode 的快速自检
+
+```sh
+swiftc -parse $(find Compositor -name '*.swift')      # 语法层，秒级
+python3 -c "import json; json.load(open('Compositor/Localizable.xcstrings'))"   # catalog 合法性
+```
+
+只查语法，**类型检查与链接必须靠 Xcode 或 CI**。
 
 ---
 
