@@ -1,12 +1,42 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@"
+          }
+        }
+      }
+    },
     "%@ color": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "%@颜色"
+          }
+        }
+      }
+    },
+    "%@ ms · %@ fps": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 毫秒 · %@ 帧/秒"
+          }
+        }
+      }
+    },
+    "%@ ms · %lld fps": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 毫秒 · %lld 帧/秒"
           }
         }
       }
@@ -31,12 +61,52 @@
         }
       }
     },
+    "%@ · Original": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · 原始"
+          }
+        }
+      }
+    },
     "%@ › %@": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ › %@"
+          }
+        }
+      }
+    },
+    "%@%": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%"
+          }
+        }
+      }
+    },
+    "%@. Double-click to reset.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@。双击可重置。"
+          }
+        }
+      }
+    },
+    "%@…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@…"
           }
         }
       }
@@ -51,12 +121,52 @@
         }
       }
     },
+    "%lld ms · %@ fps": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 毫秒 · %@ 帧/秒"
+          }
+        }
+      }
+    },
+    "%lld ms · %lld fps": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 毫秒 · %lld 帧/秒"
+          }
+        }
+      }
+    },
     "%lld × %lld px": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld × %lld 像素"
+          }
+        }
+      }
+    },
+    "16 bits per channel": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每通道 16 位"
+          }
+        }
+      }
+    },
+    "16-bit layer: keeps 16 bits a channel": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "16 位图层：每通道保留 16 位"
           }
         }
       }
@@ -151,6 +261,16 @@
         }
       }
     },
+    "Add Light": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加灯光"
+          }
+        }
+      }
+    },
     "Add Mask": {
       "localizations": {
         "zh-Hans": {
@@ -201,6 +321,36 @@
         }
       }
     },
+    "Add layer mask (Option-click for a black mask)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加图层蒙版（按住 Option 点击为黑色蒙版）"
+          }
+        }
+      }
+    },
+    "Add layer mask revealing the selection (Option-click to hide it)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加显示选区的图层蒙版（按住 Option 点击则隐藏选区）"
+          }
+        }
+      }
+    },
+    "Add to %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加到%@"
+          }
+        }
+      }
+    },
     "Adds film grain, strongest in the middle tones.": {
       "localizations": {
         "zh-Hans": {
@@ -241,6 +391,16 @@
         }
       }
     },
+    "Adjustment · Double-click to edit": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调整 · 双击可编辑"
+          }
+        }
+      }
+    },
     "Adjusts the bright parts of the picture. Hold Option to see clipped highlights.": {
       "localizations": {
         "zh-Hans": {
@@ -267,6 +427,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "高级"
+          }
+        }
+      }
+    },
+    "Align": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对齐"
           }
         }
       }
@@ -321,6 +491,16 @@
         }
       }
     },
+    "Alpha": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpha"
+          }
+        }
+      }
+    },
     "Amount": {
       "localizations": {
         "zh-Hans": {
@@ -341,6 +521,16 @@
         }
       }
     },
+    "Anamorphic Flare": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "变形宽银幕光晕"
+          }
+        }
+      }
+    },
     "Anchor": {
       "localizations": {
         "zh-Hans": {
@@ -357,6 +547,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "角度"
+          }
+        }
+      }
+    },
+    "Animated GIF: select it to show its frames under the canvas": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "动画 GIF：选中后可在画布下方显示其帧"
+          }
+        }
+      }
+    },
+    "Another app changed this project. You can revert to the version on disk, losing your unsaved changes, or keep what you have.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "另一个应用修改了此项目。你可以还原为磁盘上的版本（未保存的更改将丢失），或保留当前内容。"
           }
         }
       }
@@ -471,6 +681,16 @@
         }
       }
     },
+    "Automatically download and install updates in the future": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "以后自动下载并安装更新"
+          }
+        }
+      }
+    },
     "Background": {
       "localizations": {
         "zh-Hans": {
@@ -487,6 +707,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "透明区域背景"
+          }
+        }
+      }
+    },
+    "Bake and Delete": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合并并删除"
+          }
+        }
+      }
+    },
+    "Bake keeps the current masked appearance in the dependent layers’ pixels. Remove Links reveals their pixels. You can undo either choice.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「合并」把当前蒙版的呈现效果写入依赖图层的像素；「移除链接」则还原它们原本的像素。两种选择都可以撤销。"
           }
         }
       }
@@ -561,6 +801,16 @@
         }
       }
     },
+    "Black Level": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "黑场"
+          }
+        }
+      }
+    },
     "Black canvas": {
       "localizations": {
         "zh-Hans": {
@@ -597,6 +847,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "混合"
+          }
+        }
+      }
+    },
+    "Blend mode": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "混合模式"
           }
         }
       }
@@ -681,12 +941,42 @@
         }
       }
     },
+    "Blur only the colors, keeping the layer's outline and transparency as they are": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "只模糊颜色，保持图层的轮廓与透明度不变"
+          }
+        }
+      }
+    },
+    "Bokeh": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "散景"
+          }
+        }
+      }
+    },
     "Boost": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "增强"
+          }
+        }
+      }
+    },
+    "Both Ways": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双向"
           }
         }
       }
@@ -701,12 +991,32 @@
         }
       }
     },
+    "Bottom Edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "底边缘"
+          }
+        }
+      }
+    },
     "Bottom Right Pixel Color": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "右下角像素颜色"
+          }
+        }
+      }
+    },
+    "Break the lines into beads where the picture is darker than this, blending into solid lines where it's brighter": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面暗于此值时线条断开成珠状，较亮处则连成实线"
           }
         }
       }
@@ -741,6 +1051,16 @@
         }
       }
     },
+    "Brighter than white kept · Transparency kept": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留亮于白色的部分 · 保留透明区域"
+          }
+        }
+      }
+    },
     "Brightness": {
       "localizations": {
         "zh-Hans": {
@@ -757,6 +1077,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "此色轮增加的亮度。"
+          }
+        }
+      }
+    },
+    "Brings back detail in bright areas the camera partly clipped": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "找回相机轻微过曝的亮部细节"
           }
         }
       }
@@ -781,6 +1111,36 @@
         }
       }
     },
+    "CMYK": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CMYK"
+          }
+        }
+      }
+    },
+    "CMYK writes a printer's inks through the profile in View › CMYK › Profile": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CMYK 依据「视图 › CMYK › 配置文件」中的配置文件以印刷用墨输出"
+          }
+        }
+      }
+    },
+    "CMYK – %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CMYK – %@"
+          }
+        }
+      }
+    },
     "Calibration": {
       "localizations": {
         "zh-Hans": {
@@ -801,12 +1161,32 @@
         }
       }
     },
+    "Camera Raw…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera Raw…"
+          }
+        }
+      }
+    },
     "Cancel": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "取消"
+          }
+        }
+      }
+    },
+    "Canvas": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画布"
           }
         }
       }
@@ -837,6 +1217,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "画布扩展"
+          }
+        }
+      }
+    },
+    "Canvas text": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画布文字"
+          }
+        }
+      }
+    },
+    "Cap": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "端点"
+          }
+        }
+      }
+    },
+    "Cat's Eye": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "猫眼"
           }
         }
       }
@@ -881,6 +1291,16 @@
         }
       }
     },
+    "Channel Pack": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通道打包"
+          }
+        }
+      }
+    },
     "Characters": {
       "localizations": {
         "zh-Hans": {
@@ -897,6 +1317,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "检查更新…"
+          }
+        }
+      }
+    },
+    "Choke": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "收缩"
           }
         }
       }
@@ -951,6 +1381,16 @@
         }
       }
     },
+    "Choose this light's color": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择此灯光的颜色"
+          }
+        }
+      }
+    },
     "Chooses how bright an area must be to glow. Has no effect until Glow is raised.": {
       "localizations": {
         "zh-Hans": {
@@ -977,6 +1417,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "清晰度"
+          }
+        }
+      }
+    },
+    "Clear All": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部清除"
           }
         }
       }
@@ -1051,12 +1501,42 @@
         }
       }
     },
+    "Click a shortcut, then press its new key combination, or ⊗ to remove it. Changes apply when you save.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点击一个快捷键，然后按下新的组合键；点击 ⊗ 可移除。保存后生效。"
+          }
+        }
+      }
+    },
     "Click a shortcut, then press its new key combination. Changes apply when you save.": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "单击一个快捷键，然后按下新的按键组合。保存时应用更改。"
+          }
+        }
+      }
+    },
+    "Click and drag two points on canvas": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在画布上拖动两点"
+          }
+        }
+      }
+    },
+    "Click or drag on the canvas to move the center": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在画布上点击或拖动以移动中心"
           }
         }
       }
@@ -1181,6 +1661,26 @@
         }
       }
     },
+    "Clipped to %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "剪贴到%@"
+          }
+        }
+      }
+    },
+    "Clipping mask based on %@. Option-click the bottom of its row to release.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "基于%@的剪贴蒙版。按住 Option 点击其行的底部即可释放。"
+          }
+        }
+      }
+    },
     "Clone Stamp": {
       "localizations": {
         "zh-Hans": {
@@ -1207,6 +1707,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "关闭项目"
+          }
+        }
+      }
+    },
+    "Close search": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭搜索"
+          }
+        }
+      }
+    },
+    "Close the search": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭搜索"
           }
         }
       }
@@ -1511,6 +2031,46 @@
         }
       }
     },
+    "Convert to 16-Bit": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "转换为 16 位"
+          }
+        }
+      }
+    },
+    "Convert to 8-Bit": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "转换为 8 位"
+          }
+        }
+      }
+    },
+    "Copies": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重影数"
+          }
+        }
+      }
+    },
+    "Copies to one side of the picture, or out to both": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "只向画面一侧复制，或向两侧复制"
+          }
+        }
+      }
+    },
     "Copy": {
       "localizations": {
         "zh-Hans": {
@@ -1561,6 +2121,26 @@
         }
       }
     },
+    "Couldn’t crop": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法裁剪"
+          }
+        }
+      }
+    },
+    "Couldn’t paint": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法绘制"
+          }
+        }
+      }
+    },
     "Create Clipping Mask": {
       "localizations": {
         "zh-Hans": {
@@ -1577,6 +2157,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "创建纹理"
+          }
+        }
+      }
+    },
+    "Create a canvas or import a file.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建画布或导入文件。"
           }
         }
       }
@@ -1671,6 +2261,26 @@
         }
       }
     },
+    "Custom ratio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自定义比例"
+          }
+        }
+      }
+    },
+    "Custom…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自定义…"
+          }
+        }
+      }
+    },
     "Cut": {
       "localizations": {
         "zh-Hans": {
@@ -1741,6 +2351,16 @@
         }
       }
     },
+    "Darker or lighter before the lines are drawn": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画线之前先加深或提亮"
+          }
+        }
+      }
+    },
     "Dashed Lines": {
       "localizations": {
         "zh-Hans": {
@@ -1787,6 +2407,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "去除雾霭"
+          }
+        }
+      }
+    },
+    "Delete %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除%@"
+          }
+        }
+      }
+    },
+    "Delete Frame": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除帧"
           }
         }
       }
@@ -1851,12 +2491,62 @@
         }
       }
     },
+    "Delete layer mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除图层蒙版"
+          }
+        }
+      }
+    },
+    "Delete selected effect": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所选效果"
+          }
+        }
+      }
+    },
+    "Delete selected layer": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所选图层"
+          }
+        }
+      }
+    },
+    "Delete selected layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所选图层"
+          }
+        }
+      }
+    },
     "Density": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "浓度"
+          }
+        }
+      }
+    },
+    "Depth": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位深"
           }
         }
       }
@@ -1927,6 +2617,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "将此颜色范围之外的图像变暗。按“好”后不会保留。"
+          }
+        }
+      }
+    },
+    "Direction": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "方向"
           }
         }
       }
@@ -2007,6 +2707,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "畸变"
+          }
+        }
+      }
+    },
+    "Distribute": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分布"
           }
         }
       }
@@ -2101,6 +2811,16 @@
         }
       }
     },
+    "Drag a point. Click to add one. Double-click a point to remove it.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拖动控制点。点击可添加，双击控制点可删除。"
+          }
+        }
+      }
+    },
     "Drag inside the wheel. Angle sets hue, distance sets saturation.": {
       "localizations": {
         "zh-Hans": {
@@ -2161,6 +2881,16 @@
         }
       }
     },
+    "Drag up or down to lift or lower those tones. Drag a divider along the bottom to change which tones each region covers.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上下拖动可提亮或压暗这些色调。拖动底部的分隔条可改变各区域覆盖的色调范围。"
+          }
+        }
+      }
+    },
     "Draw Guides": {
       "localizations": {
         "zh-Hans": {
@@ -2177,6 +2907,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "将每个大块像素绘制为实心方形，或像点阵屏幕一样的圆点"
+          }
+        }
+      }
+    },
+    "Draw no line where the picture is darker than this, leaving the screen dark": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面暗于此值时不画线，屏幕保持暗色"
           }
         }
       }
@@ -2231,6 +2971,16 @@
         }
       }
     },
+    "Duplicate Frame": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复制帧"
+          }
+        }
+      }
+    },
     "Duplicate Layer": {
       "localizations": {
         "zh-Hans": {
@@ -2247,6 +2997,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "复制图层"
+          }
+        }
+      }
+    },
+    "Each channel from a layer, read as grayscale · PNG": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "各通道取自图层，按灰度读取 · PNG"
           }
         }
       }
@@ -2287,6 +3047,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑文本"
+          }
+        }
+      }
+    },
+    "Editable text layer": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可编辑的文字图层"
           }
         }
       }
@@ -2381,12 +3151,52 @@
         }
       }
     },
+    "Enabled masks apply here, as on the canvas. Drag or scroll to move around; double-click switches between Fit and 100%.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用的蒙版在此同样生效，与画布一致。拖动或滚动可平移；双击在「适合窗口」与 100% 之间切换。"
+          }
+        }
+      }
+    },
+    "Encoding frame %@ of %@…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在编码第 %@ 帧，共 %@ 帧…"
+          }
+        }
+      }
+    },
+    "Encoding frame %lld of %lld…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在编码第 %lld 帧，共 %lld 帧…"
+          }
+        }
+      }
+    },
     "End of the hue range, in degrees.": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "色相范围的终点，以度为单位。"
+          }
+        }
+      }
+    },
+    "Enter a positive ratio within the document size limits.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请输入一个在文档尺寸限制内的正比例。"
           }
         }
       }
@@ -2651,6 +3461,16 @@
         }
       }
     },
+    "Fill color": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "填充颜色"
+          }
+        }
+      }
+    },
     "Fill the selection using surrounding pixels from this layer.": {
       "localizations": {
         "zh-Hans": {
@@ -2691,12 +3511,32 @@
         }
       }
     },
+    "Filter the layer list": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "筛选图层列表"
+          }
+        }
+      }
+    },
     "Final dimensions must be 1–%@ pixels per side.": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "最终尺寸的每边必须为 1–%@ 像素。"
+          }
+        }
+      }
+    },
+    "Finding the subject…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在查找主体…"
           }
         }
       }
@@ -2811,6 +3651,26 @@
         }
       }
     },
+    "Folder": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文件夹"
+          }
+        }
+      }
+    },
+    "Font": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "字体"
+          }
+        }
+      }
+    },
     "Font face, including bold and italic variants": {
       "localizations": {
         "zh-Hans": {
@@ -2851,12 +3711,52 @@
         }
       }
     },
+    "Forever": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无限"
+          }
+        }
+      }
+    },
     "Format": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "格式"
+          }
+        }
+      }
+    },
+    "Frame %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 %@ 帧"
+          }
+        }
+      }
+    },
+    "Frame %lld": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 %lld 帧"
+          }
+        }
+      }
+    },
+    "Frames": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "帧"
           }
         }
       }
@@ -2871,6 +3771,26 @@
         }
       }
     },
+    "Fringe": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "色边"
+          }
+        }
+      }
+    },
+    "From": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "起始"
+          }
+        }
+      }
+    },
     "Fuzziness": {
       "localizations": {
         "zh-Hans": {
@@ -2881,12 +3801,32 @@
         }
       }
     },
+    "GIF keeps fully transparent or opaque pixels; soft edges use a 50% threshold.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GIF 只保留全透明或全不透明像素；柔和边缘按 50% 阈值处理。"
+          }
+        }
+      }
+    },
     "Gamma": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "伽马"
+          }
+        }
+      }
+    },
+    "Gamut Warning": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "色域警告"
           }
         }
       }
@@ -3111,6 +4051,16 @@
         }
       }
     },
+    "HDR layer: keeps light brighter than white, shown as white": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HDR 图层：保留亮于白色的光，显示为白色"
+          }
+        }
+      }
+    },
     "HSL lists every color. Color edits one family. Point Color adjusts a color you pick.": {
       "localizations": {
         "zh-Hans": {
@@ -3251,6 +4201,26 @@
         }
       }
     },
+    "Hexagon": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "六边形"
+          }
+        }
+      }
+    },
+    "Hide": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隐藏"
+          }
+        }
+      }
+    },
     "Hide %@": {
       "localizations": {
         "zh-Hans": {
@@ -3381,6 +4351,16 @@
         }
       }
     },
+    "Highlight Recovery": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "高光恢复"
+          }
+        }
+      }
+    },
     "Highlights": {
       "localizations": {
         "zh-Hans": {
@@ -3421,12 +4401,92 @@
         }
       }
     },
+    "Horizontal Centers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "水平居中"
+          }
+        }
+      }
+    },
+    "Horizontal Spacing": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "水平间距"
+          }
+        }
+      }
+    },
+    "Horizontal ruler": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "水平标尺"
+          }
+        }
+      }
+    },
+    "How bright a light has to be to flare; near 100, only the biggest, brightest spots": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灯光亮到多少才产生光晕；接近 100 时只有最大最亮的光点才有"
+          }
+        }
+      }
+    },
+    "How bright a light has to be to sparkle; near 100, only the biggest, brightest spots": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灯光亮到多少才产生星芒；接近 100 时只有最大最亮的光点才有"
+          }
+        }
+      }
+    },
+    "How bright the lines are where the picture is black, so they show even over black": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面为纯黑时线条的亮度，使其在黑底上也可见"
+          }
+        }
+      }
+    },
+    "How brightly lights open into discs": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灯光散开为光斑的亮度"
+          }
+        }
+      }
+    },
     "How far a color may be from the picked ones and still be selected": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "某种颜色与被选颜色的最大差距仍会被选中"
+          }
+        }
+      }
+    },
+    "How far apart the copies are": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "各重影之间的间距"
           }
         }
       }
@@ -3491,6 +4551,16 @@
         }
       }
     },
+    "How far out of focus: the size of each disc": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "失焦程度：每个光斑的大小"
+          }
+        }
+      }
+    },
     "How far the blur softens, in pixels": {
       "localizations": {
         "zh-Hans": {
@@ -3501,12 +4571,142 @@
         }
       }
     },
+    "How far the brightness is smoothed before it displaces the lines, from sharp ridges to rounded hills": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "亮度在推动线条前被平滑的程度，从尖锐脊线到圆润起伏"
+          }
+        }
+      }
+    },
+    "How far the colors spread apart, red one way and blue the other": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "颜色分离的距离，红蓝各向一侧"
+          }
+        }
+      }
+    },
+    "How far the lens's coatings turn each streak blue along its length; none keeps the light's own color": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "镜头镀膜使光斑沿长度偏蓝的程度；0 保留灯光原本的颜色"
+          }
+        }
+      }
+    },
+    "How far the light spreads": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光线的扩散范围"
+          }
+        }
+      }
+    },
+    "How far the light wraps around the subject's edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光线环绕主体边缘的程度"
+          }
+        }
+      }
+    },
+    "How far the spikes reach": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "星芒的延伸长度"
+          }
+        }
+      }
+    },
+    "How far the streaks reach across the picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光斑在画面中延伸的距离"
+          }
+        }
+      }
+    },
+    "How fine the detail it sharpens: small for crisp texture, larger for a punchier look": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "锐化的细节尺度：小值突出清晰纹理，大值更具冲击力"
+          }
+        }
+      }
+    },
+    "How long each frame shows": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每帧显示的时长"
+          }
+        }
+      }
+    },
+    "How many spikes each light has, as the lens's aperture blades make them": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每道灯光的星芒数量，如同镜头光圈叶片形成的"
+          }
+        }
+      }
+    },
+    "How many times the picture echoes, each fainter": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面重影的次数，每次更淡"
+          }
+        }
+      }
+    },
+    "How much light scatters: a soft halo around bright areas, and gently lifted shadows": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光线散射的程度：亮部周围形成柔和光晕，暗部被轻轻提亮"
+          }
+        }
+      }
+    },
     "How much of each pixel's error spreads to its neighbors. Less gives flatter areas": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "每个像素的误差扩散给邻域的比例。越小则平坦区域越多"
+          }
+        }
+      }
+    },
+    "How much of the gap a bright line fills; dimmer parts draw it thinner": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "明亮处线条填满间隙的比例；较暗处线条更细"
           }
         }
       }
@@ -3527,6 +4727,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "应用配置文件暗角校正的比例。"
+          }
+        }
+      }
+    },
+    "How strongly edges and fine detail are brought out": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "边缘与细节的强化程度"
+          }
+        }
+      }
+    },
+    "How the light ends on the inside: low feathers it off softly from the edge, high holds it bright and ends it crisply": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光线在内侧的收束方式：低值从边缘柔和羽化，高值保持明亮并干脆截断"
+          }
+        }
+      }
+    },
+    "How the line's ends, and each of its dashes and dots, are finished": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "线条两端及每段虚线、实点的收尾方式"
           }
         }
       }
@@ -3567,6 +4797,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "此色轮的色相与饱和度。"
+          }
+        }
+      }
+    },
+    "Hue around the wheel, saturation outward from the center. Control-click to show the histogram.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "色相沿色轮环绕，饱和度由中心向外。按住 Control 点击显示直方图。"
           }
         }
       }
@@ -3701,6 +4941,16 @@
         }
       }
     },
+    "Import a file or add a blank layer.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入文件或添加空白图层。"
+          }
+        }
+      }
+    },
     "Import an image or add a blank layer.": {
       "localizations": {
         "zh-Hans": {
@@ -3711,12 +4961,32 @@
         }
       }
     },
+    "Import couldn’t finish": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入未能完成"
+          }
+        }
+      }
+    },
     "Import image": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "导入图像"
+          }
+        }
+      }
+    },
+    "Import, then open the Camera Raw Filter": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入后打开 Camera Raw 滤镜"
           }
         }
       }
@@ -3737,6 +5007,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "正在导入…"
+          }
+        }
+      }
+    },
+    "Import…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入…"
           }
         }
       }
@@ -3831,6 +5111,26 @@
         }
       }
     },
+    "Install Update": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安装更新"
+          }
+        }
+      }
+    },
+    "Install and Relaunch": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安装并重新启动"
+          }
+        }
+      }
+    },
     "Inverse": {
       "localizations": {
         "zh-Hans": {
@@ -3861,12 +5161,42 @@
         }
       }
     },
+    "Keep Mine": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留我的"
+          }
+        }
+      }
+    },
+    "Keep the 16-bit layers' full precision, in a file about twice the size": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留 16 位图层的完整精度，文件约为两倍大小"
+          }
+        }
+      }
+    },
     "Keep the source moving with the brush between strokes; off starts every stroke at the source point": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "在各笔画之间让源点随画笔移动；关闭则每笔都从源点开始"
+          }
+        }
+      }
+    },
+    "Keep transparent areas": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留透明区域"
           }
         }
       }
@@ -3911,6 +5241,26 @@
         }
       }
     },
+    "Last Filter": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上次滤镜"
+          }
+        }
+      }
+    },
+    "Last Filter: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上次滤镜：%@"
+          }
+        }
+      }
+    },
     "Layer": {
       "localizations": {
         "zh-Hans": {
@@ -3947,6 +5297,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "图层样式"
+          }
+        }
+      }
+    },
+    "Layer via Copy": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过拷贝的图层"
           }
         }
       }
@@ -3991,12 +5351,42 @@
         }
       }
     },
+    "Left Edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "左边缘"
+          }
+        }
+      }
+    },
+    "Length": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "长度"
+          }
+        }
+      }
+    },
     "Lens Correction": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "镜头校正"
+          }
+        }
+      }
+    },
+    "Let the lights glow in the air around the subject, blending them into the background": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "让灯光在主体周围的空气中发光，与背景融合"
           }
         }
       }
@@ -4021,12 +5411,42 @@
         }
       }
     },
+    "Lift the lines where the picture is bright, or lower them when negative, so they swell into its shapes": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面明亮处线条抬升，取负值时下沉，使其隆起贴合画面形状"
+          }
+        }
+      }
+    },
     "Light": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "浅色"
+          }
+        }
+      }
+    },
+    "Light %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灯光 %@"
+          }
+        }
+      }
+    },
+    "Light %lld": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "灯光 %lld"
           }
         }
       }
@@ -4071,12 +5491,32 @@
         }
       }
     },
+    "Light gathered at each disc's rim, as some lenses draw it": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光斑边缘聚拢的光，如同某些镜头的成像"
+          }
+        }
+      }
+    },
     "Light on Dark": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "深底浅色"
+          }
+        }
+      }
+    },
+    "Light the subject from another side as well": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再从另一侧照亮主体"
           }
         }
       }
@@ -4151,6 +5591,16 @@
         }
       }
     },
+    "Line layers up with each other, the selection, or the canvas when one is selected": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "让图层彼此对齐，或与选区对齐；选中画布时与画布对齐"
+          }
+        }
+      }
+    },
     "Linear": {
       "localizations": {
         "zh-Hans": {
@@ -4191,6 +5641,16 @@
         }
       }
     },
+    "Linear blurs along the line; Radial keeps the start sharp and blurs outwards": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "线性沿直线模糊；径向保持起点清晰，向外渐模糊"
+          }
+        }
+      }
+    },
     "Linear histogram with automatic vertical scaling. Tall spikes may extend beyond the graph; all tones from 0 to 255 remain included.": {
       "localizations": {
         "zh-Hans": {
@@ -4207,6 +5667,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "“线性”沿线延伸；“径向”从起点向外扩散"
+          }
+        }
+      }
+    },
+    "Linear splits along one direction; Radial splits outwards from a center, sharp there": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "线性沿一个方向分离；径向从中心向外分离，中心保持清晰"
           }
         }
       }
@@ -4241,6 +5711,26 @@
         }
       }
     },
+    "Link layer and mask so they move together": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "链接图层与蒙版，使二者一起移动"
+          }
+        }
+      }
+    },
+    "Link mask: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "链接蒙版：%@"
+          }
+        }
+      }
+    },
     "Liquify": {
       "localizations": {
         "zh-Hans": {
@@ -4257,6 +5747,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "“液化”推动像素 · “模糊”柔化 · “涂抹”拖动颜色"
+          }
+        }
+      }
+    },
+    "Load Profile…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "载入配置文件…"
           }
         }
       }
@@ -4307,6 +5807,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "锁定原始纵横比"
+          }
+        }
+      }
+    },
+    "Loop": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "循环"
           }
         }
       }
@@ -4701,6 +6211,26 @@
         }
       }
     },
+    "Missing source": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "缺失来源"
+          }
+        }
+      }
+    },
+    "Mist": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "雾气"
+          }
+        }
+      }
+    },
     "Mixer": {
       "localizations": {
         "zh-Hans": {
@@ -4727,6 +6257,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "单色"
+          }
+        }
+      }
+    },
+    "More": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更多"
+          }
+        }
+      }
+    },
+    "More formats": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更多格式"
           }
         }
       }
@@ -4817,6 +6367,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "移动选区"
+          }
+        }
+      }
+    },
+    "Move the red and blue apart, for colored fringes on the lines": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将红蓝分开，在线条上形成彩色边缘"
           }
         }
       }
@@ -5011,6 +6571,16 @@
         }
       }
     },
+    "New canvas (⌘N) · Drop images here for new tabs": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建画布（⌘N）· 将图像拖到这里可开新标签页"
+          }
+        }
+      }
+    },
     "New color": {
       "localizations": {
         "zh-Hans": {
@@ -5071,6 +6641,16 @@
         }
       }
     },
+    "No profile": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无配置文件"
+          }
+        }
+      }
+    },
     "Noise Reduction": {
       "localizations": {
         "zh-Hans": {
@@ -5087,6 +6667,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "正常"
+          }
+        }
+      }
+    },
+    "Not available for this camera": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此相机不支持"
           }
         }
       }
@@ -5171,6 +6761,26 @@
         }
       }
     },
+    "Once": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一次"
+          }
+        }
+      }
+    },
+    "One Way": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "单向"
+          }
+        }
+      }
+    },
     "Only print dimensions and resolution change. Pixels stay unchanged.": {
       "localizations": {
         "zh-Hans": {
@@ -5227,6 +6837,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "打开最近使用"
+          }
+        }
+      }
+    },
+    "Open in a new project tab": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在新项目标签页中打开"
           }
         }
       }
@@ -5311,6 +6931,26 @@
         }
       }
     },
+    "Other formats: TIFF, PDF and GIF, EXR to keep light brighter than white, and Channel Pack for game textures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其他格式：TIFF、PDF 和 GIF；EXR 可保留亮于白色的部分；以及用于游戏贴图的「通道打包」"
+          }
+        }
+      }
+    },
+    "Other formats: TIFF, PDF and GIF, and Channel Pack for game textures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其他格式：TIFF、PDF 和 GIF，以及用于游戏贴图的「通道打包」"
+          }
+        }
+      }
+    },
     "Outer Glow": {
       "localizations": {
         "zh-Hans": {
@@ -5347,6 +6987,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "外部"
+          }
+        }
+      }
+    },
+    "Oval": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "椭圆形"
           }
         }
       }
@@ -5451,6 +7101,56 @@
         }
       }
     },
+    "Pause": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂停"
+          }
+        }
+      }
+    },
+    "Pause animation preview": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂停动画预览"
+          }
+        }
+      }
+    },
+    "Pause the animation preview.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂停动画预览。"
+          }
+        }
+      }
+    },
+    "Pen pressure sets the opacity: a light touch paints fainter, up to the brush’s Opacity": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "笔压控制不透明度：轻按绘制更淡，最高到画笔的不透明度"
+          }
+        }
+      }
+    },
+    "Pen pressure sets the size: a light touch paints a thinner line": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "笔压控制大小：轻按绘制更细的线条"
+          }
+        }
+      }
+    },
     "Percent": {
       "localizations": {
         "zh-Hans": {
@@ -5537,6 +7237,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "像素"
+          }
+        }
+      }
+    },
+    "Play": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "播放"
+          }
+        }
+      }
+    },
+    "Play animation preview": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "播放动画预览"
+          }
+        }
+      }
+    },
+    "Play the animation preview.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "播放动画预览。"
           }
         }
       }
@@ -5631,6 +7361,16 @@
         }
       }
     },
+    "Preserve Transparency": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留透明区域"
+          }
+        }
+      }
+    },
     "Preserves colored edges while color noise is reduced.": {
       "localizations": {
         "zh-Hans": {
@@ -5721,6 +7461,36 @@
         }
       }
     },
+    "Press a shortcut": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按下快捷键"
+          }
+        }
+      }
+    },
+    "Pressure for opacity": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "笔压控制不透明度"
+          }
+        }
+      }
+    },
+    "Pressure for size": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "笔压控制大小"
+          }
+        }
+      }
+    },
     "Preview": {
       "localizations": {
         "zh-Hans": {
@@ -5731,12 +7501,32 @@
         }
       }
     },
+    "Prism": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "棱镜"
+          }
+        }
+      }
+    },
     "Process": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "流程"
+          }
+        }
+      }
+    },
+    "Profile": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "配置文件"
           }
         }
       }
@@ -5757,6 +7547,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "投影"
+          }
+        }
+      }
+    },
+    "Proof Colors": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "校样颜色"
           }
         }
       }
@@ -5837,6 +7637,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "质量"
+          }
+        }
+      }
+    },
+    "RGB": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RGB"
           }
         }
       }
@@ -6071,6 +7881,16 @@
         }
       }
     },
+    "Remind Me Later": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "稍后提醒"
+          }
+        }
+      }
+    },
     "Remove": {
       "localizations": {
         "zh-Hans": {
@@ -6111,6 +7931,16 @@
         }
       }
     },
+    "Remove Links and Delete": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除链接并删除"
+          }
+        }
+      }
+    },
     "Remove every guide line.": {
       "localizations": {
         "zh-Hans": {
@@ -6127,6 +7957,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "移除点"
+          }
+        }
+      }
+    },
+    "Remove this light": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除此灯光"
+          }
+        }
+      }
+    },
+    "Remove this shortcut": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除此快捷键"
+          }
+        }
+      }
+    },
+    "Removes the lens's distortion and vignetting": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "校正镜头的畸变与暗角"
           }
         }
       }
@@ -6207,6 +8067,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "重置"
+          }
+        }
+      }
+    },
+    "Reset %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置%@"
+          }
+        }
+      }
+    },
+    "Reset %@ to its defaults": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将%@重置为默认值"
           }
         }
       }
@@ -6301,12 +8181,42 @@
         }
       }
     },
+    "Revert": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还原"
+          }
+        }
+      }
+    },
     "Right": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "右"
+          }
+        }
+      }
+    },
+    "Right Edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "右边缘"
+          }
+        }
+      }
+    },
+    "Ring": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光环"
           }
         }
       }
@@ -6357,6 +8267,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "粗糙度"
+          }
+        }
+      }
+    },
+    "Round": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "圆形"
           }
         }
       }
@@ -6591,12 +8511,42 @@
         }
       }
     },
+    "Search Fonts": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "搜索字体"
+          }
+        }
+      }
+    },
     "Search commands and tools": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "搜索命令和工具"
+          }
+        }
+      }
+    },
+    "Search layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "搜索图层"
+          }
+        }
+      }
+    },
+    "Search layers by name": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按名称搜索图层"
           }
         }
       }
@@ -6617,6 +8567,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择"
+          }
+        }
+      }
+    },
+    "Select %@: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择%@：%@"
           }
         }
       }
@@ -6651,6 +8611,26 @@
         }
       }
     },
+    "Select image pixels": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择图像像素"
+          }
+        }
+      }
+    },
+    "Select layer mask; Option-click to view it alone; Shift-click to enable/disable; Cmd-click to select its black areas (Cmd-Shift adds, Cmd-Option subtracts)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择图层蒙版；按住 Option 点击可单独查看；按住 Shift 点击可启用/停用；按住 Command 点击可选择其黑色区域（加按 Shift 为加选，加按 Option 为减选）"
+          }
+        }
+      }
+    },
     "Select layer; Cmd-click to select its pixels (Cmd-Shift adds, Cmd-Option subtracts)": {
       "localizations": {
         "zh-Hans": {
@@ -6667,6 +8647,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "通过单击画布选择图层。单击时按住 Command 可临时反转。"
+          }
+        }
+      }
+    },
+    "Select mask: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择蒙版：%@"
           }
         }
       }
@@ -6707,6 +8697,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "服务"
+          }
+        }
+      }
+    },
+    "Set a radius above 0 to use smooth corners.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将半径设为大于 0 以使用平滑圆角。"
           }
         }
       }
@@ -6991,6 +8991,16 @@
         }
       }
     },
+    "Show only some kinds of layer": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅显示某些类型的图层"
+          }
+        }
+      }
+    },
     "Show the transform box and handles (⌘H). When hidden, drag anywhere to move the layer.": {
       "localizations": {
         "zh-Hans": {
@@ -7031,12 +9041,32 @@
         }
       }
     },
+    "Skip This Version": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跳过此版本"
+          }
+        }
+      }
+    },
     "Smear": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "涂抹"
+          }
+        }
+      }
+    },
+    "Smear the split into streaks along its direction": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "沿分离方向拖出条纹"
           }
         }
       }
@@ -7051,12 +9081,52 @@
         }
       }
     },
+    "Smooth Corners": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平滑圆角"
+          }
+        }
+      }
+    },
+    "Smooth selection edges; turn off for hard pixel edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平滑选区边缘；关闭则保持硬朗的像素边缘"
+          }
+        }
+      }
+    },
+    "Smooth the detected object outline; turn off for the raw pixel mask": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平滑检测到的对象轮廓；关闭则使用原始像素蒙版"
+          }
+        }
+      }
+    },
     "Smoothing": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "平滑"
+          }
+        }
+      }
+    },
+    "Smoothness": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平滑度"
           }
         }
       }
@@ -7077,6 +9147,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "平滑亮度中的颗粒与噪点。"
+          }
+        }
+      }
+    },
+    "Smooths grain, at the cost of fine detail": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平滑颗粒，代价是损失细节"
           }
         }
       }
@@ -7121,12 +9201,62 @@
         }
       }
     },
+    "Soften the copies, more the farther they're pushed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "柔化重影，越向外越柔"
+          }
+        }
+      }
+    },
     "Softens the edge of the vignette.": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "柔化暗角边缘。"
+          }
+        }
+      }
+    },
+    "Solid, dashed or dotted; dashes grow with the line's width": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "实线、虚线或点线；虚线段随线宽增大"
+          }
+        }
+      }
+    },
+    "Split each copy's red and blue apart, as glass does; 0 keeps the copies crisp": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "像玻璃那样把每个重影的红蓝分开；0 保持重影清晰"
+          }
+        }
+      }
+    },
+    "Split the layer's original channels into four grayscale layers, Red, Green, Blue and Alpha, for Export As › Channel Pack. Color under fully transparent pixels can't be recovered": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把该图层的原始通道分离为红、绿、蓝、Alpha 四个灰度图层，用于「导出为 › 通道打包」。全透明像素下的颜色无法恢复"
+          }
+        }
+      }
+    },
+    "Split to Layers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分离到图层"
           }
         }
       }
@@ -7177,6 +9307,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "方形"
+          }
+        }
+      }
+    },
+    "Starburst": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "星芒"
           }
         }
       }
@@ -7361,6 +9501,16 @@
         }
       }
     },
+    "Swap From and To: blur the start and sharpen toward the end": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "交换起点与终点：起点模糊，向终点渐清晰"
+          }
+        }
+      }
+    },
     "Swap colors": {
       "localizations": {
         "zh-Hans": {
@@ -7451,12 +9601,52 @@
         }
       }
     },
+    "Text · Double-click to edit": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文字 · 双击可编辑"
+          }
+        }
+      }
+    },
     "Texture": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "纹理"
+          }
+        }
+      }
+    },
+    "The aperture's shape: round wide open, a hexagon of blades, an anamorphic oval, or a cat's eye toward the edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光圈形状：全开时圆形、叶片形成六边形、宽银幕椭圆形，或向边缘呈猫眼形"
+          }
+        }
+      }
+    },
+    "The blur where the line ends, and past it": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "直线终点及其之外的模糊量"
+          }
+        }
+      }
+    },
+    "The blur where the line starts": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "直线起点处的模糊量"
           }
         }
       }
@@ -7511,6 +9701,16 @@
         }
       }
     },
+    "This file has no lens profile": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此文件没有镜头配置文件"
+          }
+        }
+      }
+    },
     "Three-Way": {
       "localizations": {
         "zh-Hans": {
@@ -7531,12 +9731,32 @@
         }
       }
     },
+    "Threshold": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "阈值"
+          }
+        }
+      }
+    },
     "Tint": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "色调"
+          }
+        }
+      }
+    },
+    "To": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "结束"
           }
         }
       }
@@ -7581,6 +9801,16 @@
         }
       }
     },
+    "Tones from black on the left to white on the right: blacks, shadows, midtones, highlights, whites. Control-click to show the vectorscope.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "色调从左到右由黑到白：黑色、阴影、中间调、高光、白色。按住 Control 点击显示矢量示波器。"
+          }
+        }
+      }
+    },
     "Tones per channel: 2 is pure black and white": {
       "localizations": {
         "zh-Hans": {
@@ -7607,6 +9837,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "顶部"
+          }
+        }
+      }
+    },
+    "Top Edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顶边缘"
           }
         }
       }
@@ -7687,6 +9927,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "变换选区"
+          }
+        }
+      }
+    },
+    "Transparency": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "透明度"
           }
         }
       }
@@ -7861,6 +10111,26 @@
         }
       }
     },
+    "Unlink layer and mask to move or transform them separately": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消图层与蒙版的链接，以便分别移动或变换它们"
+          }
+        }
+      }
+    },
+    "Unlink mask: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消链接蒙版：%@"
+          }
+        }
+      }
+    },
     "Unsaved changes": {
       "localizations": {
         "zh-Hans": {
@@ -7877,6 +10147,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "未命名"
+          }
+        }
+      }
+    },
+    "Up to 256 colors · sRGB": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最多 256 色 · sRGB"
           }
         }
       }
@@ -7911,12 +10191,32 @@
         }
       }
     },
+    "Use a CMYK ICC profile, such as the one your printer gave you": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 CMYK ICC 配置文件，例如印刷厂提供的那一个"
+          }
+        }
+      }
+    },
     "Use gridlines every %@–%@ pixels and %@–%@ subdivisions, no more than the pixels between gridlines.": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "网格线间距 %@–%@ 像素，细分数量 %@–%@（不得超过网格线之间的像素数）。"
+          }
+        }
+      }
+    },
+    "Use smooth squircle corners at 60% smoothing, matching Figma's iOS setting": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "以 60% 平滑度使用平滑的方圆形圆角，与 Figma 的 iOS 设置一致"
           }
         }
       }
@@ -7997,6 +10297,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "垂直"
+          }
+        }
+      }
+    },
+    "Vertical Centers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "垂直居中"
+          }
+        }
+      }
+    },
+    "Vertical Spacing": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "垂直间距"
+          }
+        }
+      }
+    },
+    "Vertical ruler": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "垂直标尺"
           }
         }
       }
@@ -8091,6 +10421,46 @@
         }
       }
     },
+    "What fills the %@ channel: a layer or group read as grayscale, or solid black or white": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "以什么填充 %@ 通道：按灰度读取的图层或组，或纯黑、纯白"
+          }
+        }
+      }
+    },
+    "Where the light comes from, behind the subject: 0° from the right, 90° from above": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "光源在主体背后的位置：0° 在右侧，90° 在上方"
+          }
+        }
+      }
+    },
+    "Which way the colors spread": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "颜色分离的方向"
+          }
+        }
+      }
+    },
+    "Which way the copies step": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重影的排列方向"
+          }
+        }
+      }
+    },
     "White": {
       "localizations": {
         "zh-Hans": {
@@ -8171,6 +10541,26 @@
         }
       }
     },
+    "Width:Height": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宽:高"
+          }
+        }
+      }
+    },
+    "Width:height, such as 4:5 or 3:2": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宽:高，例如 4:5 或 3:2"
+          }
+        }
+      }
+    },
     "Window": {
       "localizations": {
         "zh-Hans": {
@@ -8197,6 +10587,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "处理中…"
+          }
+        }
+      }
+    },
+    "X": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "X"
+          }
+        }
+      }
+    },
+    "Y": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Y"
           }
         }
       }
@@ -8361,6 +10771,16 @@
         }
       }
     },
+    "image": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图像"
+          }
+        }
+      }
+    },
     "pixels": {
       "localizations": {
         "zh-Hans": {
@@ -8397,6 +10817,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "sRGB · 透明"
+          }
+        }
+      }
+    },
+    "text": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文字"
           }
         }
       }

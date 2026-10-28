@@ -186,13 +186,13 @@ struct NativeLayerList: NSViewRepresentable {
             menu.addItem(mergeItem)
 
             // 7b. Convert to 16-Bit / Convert to 8-Bit
-            let depthTitle = session.activeLayer?.asset?.deep == nil ? "Convert to 16-Bit" : "Convert to 8-Bit"
+            let depthTitle = loc(session.activeLayer?.asset?.deep == nil ? "Convert to 16-Bit" : "Convert to 8-Bit")
             let depthItem = NSMenuItem(title: depthTitle, action: #selector(convertDepthAction), keyEquivalent: "")
             depthItem.target = self
             depthItem.isEnabled = validateMenuItem(depthItem)
             // An HDR layer can go to 16 bits as well as to 8.
             if session.activeLayer?.asset?.isHDR == true {
-                let sixteenItem = NSMenuItem(title: "Convert to 16-Bit", action: #selector(convertHDRToSixteenAction), keyEquivalent: "")
+                let sixteenItem = NSMenuItem(title: loc("Convert to 16-Bit"), action: #selector(convertHDRToSixteenAction), keyEquivalent: "")
                 sixteenItem.target = self
                 sixteenItem.isEnabled = validateMenuItem(sixteenItem)
                 menu.addItem(sixteenItem)
@@ -1043,32 +1043,32 @@ private final class LayerCell: NSTableCellView, NSTextFieldDelegate {
         linkButton.isHidden = !linkable
         linkButton.image = layer.mask?.isLinked == false ? nil : Self.linkImage
         linkButton.isEnabled = thumbnail.isEnabled
-        linkButton.toolTip = layer.mask?.isLinked == false ? "Link layer and mask so they move together"
-            : "Unlink layer and mask to move or transform them separately"
-        linkButton.setAccessibilityLabel(layer.mask?.isLinked == false ? "Link mask: \(layer.name)" : "Unlink mask: \(layer.name)")
-        thumbnail.toolTip = editableText ? "Editable text layer" : "Select image pixels"
-        maskThumbnail.toolTip = "Select layer mask; Option-click to view it alone; Shift-click to enable/disable; Cmd-click to select its black areas (Cmd-Shift adds, Cmd-Option subtracts)"
-        thumbnail.setAccessibilityLabel("Select \(editableText ? "text" : "image"): \(layer.name)")
-        maskThumbnail.setAccessibilityLabel("Select mask: \(layer.name)")
+        linkButton.toolTip = loc(layer.mask?.isLinked == false ? "Link layer and mask so they move together"
+            : "Unlink layer and mask to move or transform them separately")
+        linkButton.setAccessibilityLabel(String(format: loc(layer.mask?.isLinked == false ? "Link mask: %@" : "Unlink mask: %@"), layer.name))
+        thumbnail.toolTip = loc(editableText ? "Editable text layer" : "Select image pixels")
+        maskThumbnail.toolTip = loc("Select layer mask; Option-click to view it alone; Shift-click to enable/disable; Cmd-click to select its black areas (Cmd-Shift adds, Cmd-Option subtracts)")
+        thumbnail.setAccessibilityLabel(String(format: loc("Select %@: %@"), loc(editableText ? "text" : "image"), layer.name))
+        maskThumbnail.setAccessibilityLabel(String(format: loc("Select mask: %@"), layer.name))
         updateTarget()
         layerName = layer.name
         // A reused cell must not carry another row's half-finished rename.
         if renaming, layerID != layer.id { restoreLabel() }
         if !renaming { nameLabel.stringValue = (layer.maskSourceID == nil ? "" : "↳ ") + layer.name }
-        dimensions.stringValue = layer.liveText != nil ? "Text · Double-click to edit" : layer.adjustment != nil ? "Adjustment · Double-click to edit" : layer.isGroup ? "Folder" : layer.sizeLabel
+        dimensions.stringValue = layer.liveText != nil ? loc("Text · Double-click to edit") : layer.adjustment != nil ? loc("Adjustment · Double-click to edit") : layer.isGroup ? loc("Folder") : layer.sizeLabel
         depthTag.text = layer.depthLabel ?? ""
-        depthTag.toolTip = layer.gifAnimation != nil ? "Animated GIF: select it to show its frames under the canvas"
+        depthTag.toolTip = loc(layer.gifAnimation != nil ? "Animated GIF: select it to show its frames under the canvas"
             : layer.asset?.isHDR == true ? "HDR layer: keeps light brighter than white, shown as white"
-            : "16-bit layer: keeps 16 bits a channel"
+            : "16-bit layer: keeps 16 bits a channel")
         depthTag.isHidden = layer.depthLabel == nil || layer.maskSourceID != nil
         depthTagFits.isActive = !depthTag.isHidden
         if let source = layer.maskSourceID {
-            let sourceName = session.document?.layers.first(where: { $0.id == source })?.name ?? "Missing source"
-            dimensions.stringValue = "Clipped to \(sourceName)"
-            dimensions.toolTip = "Clipping mask based on \(sourceName). Option-click the bottom of its row to release."
+            let sourceName = session.document?.layers.first(where: { $0.id == source })?.name ?? loc("Missing source")
+            dimensions.stringValue = String(format: loc("Clipped to %@"), sourceName)
+            dimensions.toolTip = String(format: loc("Clipping mask based on %@. Option-click the bottom of its row to release."), sourceName)
         } else { dimensions.toolTip = nil }
         eye.image = NSImage(systemSymbolName: layer.isVisible ? "eye" : "eye.slash", accessibilityDescription: nil)
-        eye.setAccessibilityLabel("\(layer.isVisible ? "Hide" : "Show") \(layer.name)")
+        eye.setAccessibilityLabel(String(format: loc("%@ %@"), loc(layer.isVisible ? "Hide" : "Show"), layer.name))
         eye.isEnabled = enabled
         eye.layerID = layer.id
         eye.session = session

@@ -30,7 +30,6 @@ struct LayersPanel: View {
                 LayersUnavailableView("No layers yet", systemImage: "square.3.layers.3d") {
                     Text(loc(session.document == nil ? "Create a canvas or import a file." : "Import a file or add a blank layer."))
                 }
-                }
             }
             Divider()
             // No spacing: each button's hit area supplies it (8 pt either side makes the 16 pt gap).

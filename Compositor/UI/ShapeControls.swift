@@ -42,7 +42,7 @@ struct ShapeControls: View {
                     Text("Style")
                     Picker("Style", selection: $session.shapeLineStyle) {
                         ForEach(ShapeLineStyle.allCases, id: \.self) { style in
-                            Image(nsImage: LineSample.style(style)).accessibilityLabel(style.rawValue).tag(style)
+                            Image(nsImage: LineSample.style(style)).accessibilityLabel(style.displayName).tag(style)
                         }
                     }
                     .pickerStyle(.menu).labelsHidden().fixedSize()
@@ -52,7 +52,7 @@ struct ShapeControls: View {
                     Text("Cap")
                     Picker("Cap", selection: $session.shapeLineCap) {
                         ForEach(ShapeLineCap.allCases, id: \.self) { cap in
-                            Label { Text(cap.rawValue) } icon: { Image(nsImage: LineSample.cap(cap)) }.tag(cap)
+                            Label { Text(cap.displayName) } icon: { Image(nsImage: LineSample.cap(cap)) }.tag(cap)
                         }
                     }
                     .pickerStyle(.menu).labelsHidden().fixedSize()

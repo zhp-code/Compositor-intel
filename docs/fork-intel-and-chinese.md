@@ -80,7 +80,7 @@ xcodebuild build \
 | `project.pbxproj` → 各 build settings | `LOCALIZATION_PREFERS_STRING_CATALOGS = YES`、`SWIFT_EMIT_LOC_STRINGS = YES` | 启用 String Catalog、自动抽取 SwiftUI 字面量 |
 | `Config/Info.plist` | `CFBundleLocalizations = [en, zh-Hans]` | 让系统识别 app 支持中文 |
 | `Compositor/Localization.swift` | 新增 | 提供 `loc()` 与 `displayName`（见下） |
-| `Compositor/Localizable.xcstrings` | 新增（约 840 条） | 英文 key → 各语言译文 |
+| `Compositor/Localizable.xcstrings` | 新增（约 1070 条） | 英文 key → 各语言译文 |
 
 `Localization.swift` 全文：
 
@@ -170,6 +170,32 @@ SwiftUI 不管这些，必须手动处理：
 
 品牌名 **Compositor**、快捷键字母（⌘T、⌘J）、文件格式与编码名（PNG、JPEG、PDF、sRGB、
 Camera Raw、LUT）、以及由 Apple 系统自行翻译的标准菜单（View / Edit / Window / Help 等）。
+
+---
+
+### 2.7 已合并到上游 v1.5.12
+
+上游从 1.4.8 到 1.5.12 加了很多新界面，本分支合并时已一并本地化（catalog 由 840 条增至 1070 条）。
+新增面与处理方式：
+
+| 功能 | 涉及界面 | 处理 |
+| --- | --- | --- |
+| HDR / 16 位图层 | 导出为的「位深」、图层右键「转换为 16 位 / 8 位」、图层行的 HDR 与 16 位标签与小提示 | `loc()` + 新 key |
+| CMYK 印刷 | 视图菜单的校样颜色、色域警告、配置文件、载入配置文件；导出为的 CMYK 与配置文件说明 | `loc()` + 新 key |
+| GIF 图层与时间轴 | 帧条、播放/暂停、延时菜单、删除与复制帧 | `loc()` + 新 key |
+| Lens Effects（光晕、星芒、雾气、棱镜、散景） | 滤镜面板整组滑块与提示 | 提示文案全部入 catalog |
+| 对齐与分布 | 图层菜单、移动工具条 | 枚举一律 `.displayName` |
+| 图层搜索与类型筛选 | 图层面板标题行、空状态 | 空状态标题与说明 |
+| 通道打包导出 | 导出为的通道选择、帮助文本 | `String(format:)` + `%@` |
+
+这次合并踩到的三类坑，以后同样会遇到：
+
+1. **枚举新成员**（`LensEffect`、`BokehShape`、`DitherColors`、`CameraRawGroup`、`LayerAlignment`、
+   `LayerDistribution`、`ChannelPack.Channel`）上游代码直接用 `.rawValue` 显示，必须逐处改 `.displayName`。
+2. **`.help()` 里嵌套带引号的三元插值**（导出为的「其他格式」提示）没法按字面量翻译，
+   已拆成两个 `loc(...)` 分支。
+3. **AppKit 单元格文案**（`NativeLayerList` 的 toolTip 与无障碍标签、`CanvasRulers`、`CameraRawSlider`、
+   `KeyboardShortcuts`）SwiftUI 不管，需逐条 `loc()`；带插值的写成 `String(format: loc("…%@…"), …)`。
 
 ---
 
