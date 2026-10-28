@@ -53,6 +53,18 @@ struct LayerAppearanceTests {
         session.typeOpacityDigit(3, at: 30)
         #expect(session.document?.layers.first { $0.id == second }?.opacity == 0.5)
     }
+    @Test(arguments: [NavigationTool.marquee, .lasso, .wand])
+    func selectionToolNumberKeysSetSelectedLayersOpacity(tool: NavigationTool) throws {
+        let session = EditorSession()
+        session.createDocument(width: 4, height: 4)
+        session.insert(try asset(0.2))
+        let layer = try #require(session.activeLayerID)
+        session.selectTool(tool)
+        session.typeOpacityDigit(3, at: 10)
+        #expect(session.document?.layers.first { $0.id == layer }?.opacity == 0.3)
+        session.typeOpacityDigit(7, at: 10.2)
+        #expect(session.document?.layers.first { $0.id == layer }?.opacity == 0.37)
+    }
     private func asset(_ gray: CGFloat) throws -> ImportedImage {
         let space = CGColorSpace(name: CGColorSpace.sRGB)!
         let context = try #require(CGContext(data: nil, width: 4, height: 4, bitsPerComponent: 8,
@@ -124,7 +136,7 @@ struct LayerAppearanceTests {
         defer { try? FileManager.default.removeItem(at: url) }
         try await ProjectStore.shared.save(snapshot, to: url)
         let loaded = try await ProjectStore.shared.load(from: url)
-        #expect(loaded.manifest.version == 11)
+        #expect(loaded.manifest.version == ProjectManifest.current)
         let resized = try await ImageResizer.shared.resize(loaded, to: ImageSizeOptions(width: 8, height: 8, resolution: 72))
         let canvas = try await CanvasResizer.shared.resize(resized, to: CanvasSizeOptions(width: 12, height: 12))
         let record = try #require(canvas.manifest.layers.first { $0.id == id })
