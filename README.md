@@ -106,7 +106,24 @@ The interface follows the macOS system language. To pin Compositor to Chinese on
 
 ## Translations
 
+> 上游（robbietilton/Compositor）暂只支持英文，且不接受翻译 PR；**本分支不同**，它自行维护简体中文界面。中文相关的问题和 PR 请提到**本仓库**，不要提到上游。  
+> Upstream stays English only and doesn't accept translation PRs; this fork maintains Simplified Chinese on its own, so translation issues and PRs belong **here**, not upstream.
+
+This fork ships a Simplified Chinese (zh-Hans) interface and keeps it current through upstream merges. How it works:
+
+- The catalog is `Compositor/Localizable.xcstrings` — currently 1,117 keys, 1,106 with Chinese. Terminology follows the Simplified Chinese Photoshop UI (色阶, 曲线, 仿制图章, 正片叠底 …).
+- Saving identifiers stay English: the `rawValue` strings written into `.comp` project files are never translated, only the display layer is (see [docs/fork-intel-and-chinese.md](docs/fork-intel-and-chinese.md) for the full set of rules and pitfalls).
+- After each upstream merge, newly added UI is translated as part of the merge; the maintenance guide's checklist covers what to sweep.
+- Deliberately untranslated: the brand name, keyboard-shortcut letters, and pure symbols (`·`, `×`, `%`, `px`).
+
+Found a string still showing in English, or a term that reads wrong? Open an issue or PR in this repository.
+
+<details>
+<summary>Upstream's original note (kept for reference)</summary>
+
 Compositor is English only for now, and translation pull requests aren't being accepted. It's maintained by one person, every new string would need translating from then on, and translations in languages I don't read can't be reviewed. I'll revisit this once the app settles; until then, please don't open localization PRs.
+
+</details>
 
 ## Other platforms
 
@@ -121,6 +138,8 @@ More are listed in [#23 (Windows)](https://github.com/robbietilton/Compositor/is
 ## Building
 
 Open `Compositor.xcodeproj` and run the **Compositor** scheme.
+
+For the universal (Intel + Apple silicon) build, the Release/ad-hoc signing caveat, and CI that produces a DMG, see [docs/fork-intel-and-chinese.md](docs/fork-intel-and-chinese.md), chapter 四 (Build & verify).
 
 ## Releasing
 
