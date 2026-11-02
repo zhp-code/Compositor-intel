@@ -4,10 +4,11 @@
 > 本仓库是从 [robbietilton/Compositor](https://github.com/robbietilton/Compositor) 派生的分支，相对上游做了两处主要改动：  
 > 1. **支持 Intel 芯片** — 上游仅面向 Apple silicon，本分支已调整构建配置，可在 Intel Mac 上编译与运行。  
 > 2. **简体中文界面** — 新增 `zh-Hans` String Catalog，跟随 macOS 系统语言自动切换。在系统偏好设置 > 通用 > 语言与地区 > 应用程序中，也可单独把 Compositor 指定为中文。  
+> 3. **更新检查已禁用** — 内置更新源指向上游（arm64-only、英文版），安装会覆盖本分支的全部改动；需要新版时从本仓库 CI 重新下载。  
 > 详细要求见下方 Requirements 章节。  
 > 完整改动清单与维护指南（新增界面如何做本地化、如何合并上游、如何构建 Intel 包）见 [docs/fork-intel-and-chinese.md](docs/fork-intel-and-chinese.md)。  
 >  
-> This fork of [robbietilton/Compositor](https://github.com/robbietilton/Compositor) adds **Intel Mac support** (upstream is Apple-silicon only) and a **Simplified Chinese (zh-Hans) interface** that follows the system language. See *Requirements* below, and [docs/fork-intel-and-chinese.md](docs/fork-intel-and-chinese.md) for the full maintenance guide.
+> This fork of [robbietilton/Compositor](https://github.com/robbietilton/Compositor) adds **Intel Mac support** (upstream is Apple-silicon only) and a **Simplified Chinese (zh-Hans) interface** that follows the system language. Update checks are disabled: Sparkle's feed points upstream, whose Apple-silicon-only English build would overwrite this fork — re-download from this repo's CI instead. See *Requirements* below, and [docs/fork-intel-and-chinese.md](docs/fork-intel-and-chinese.md) for the full maintenance guide.
 
 Adobe Photoshop costs too much and tools like GIMP don’t feel familiar enough for me to stay in flow. That’s why I built Compositor.
 
@@ -88,7 +89,7 @@ brew install --cask robbietilton-compositor
 - Keep working while a project saves
 - Photoshop-style keyboard shortcuts throughout, remappable in Edit > Keyboard Shortcuts
 - Drag a number's label to scrub its value, as in Photoshop
-- Automatic updates, signed and notarized
+- Automatic updates, signed and notarized. *(Fork builds: ad-hoc signed, and update checks are disabled — the upstream feed would overwrite this fork with its Apple-silicon-only English build. Re-download from the fork's CI instead.)*
 
 ### Works with AI agents
 - AI agents and scripts can build and edit projects directly: a `.comp` is a folder of PNG layers and a manifest, and an open project updates live as it's written. See [Writing Compositor projects](docs/writing-comp-files.md)

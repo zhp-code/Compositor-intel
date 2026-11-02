@@ -68,8 +68,10 @@
 	<string>https://raw.githubusercontent.com/robbietilton/Compositor/main/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>KZvD724t8QpzTR4OGrHrsCWt538TJ/g/qrTZii+o214=</string>
+	<!-- This fork disables update checks: SUFeedURL points upstream, whose arm64-only English build
+	     would overwrite the fork's Intel support and Chinese UI if installed. See docs/fork-intel-and-chinese.md 1.5. -->
 	<key>SUEnableAutomaticChecks</key>
-	<true/>
+	<false/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

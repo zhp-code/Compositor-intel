@@ -60,6 +60,22 @@ xcodebuild build \
   xattr -dr com.apple.quarantine /Applications/Compositor.app
   ```
 
+### 1.5 更新检查已禁用（合并上游后必查）
+
+Sparkle 的更新源 `SUFeedURL`（`Config/Info.plist`）指向**上游**的 appcast。上游的包是
+arm64-only、纯英文的——fork 用户一旦点了「检查更新…」并被安装，**Intel 支持和中文界面会被
+整体覆盖**，且过程毫无提示。因此本分支禁用了全部更新入口：
+
+| 位置 | 改动 |
+| --- | --- |
+| `Compositor/CompositorApp.swift` | 删掉 app 菜单的「Check for Updates…」（`CommandGroup(after: .appInfo)` 整组），留了注释说明 |
+| `Config/Info.plist` | `SUEnableAutomaticChecks` 设为 `false`，并加 XML 注释说明原因 |
+
+`UpdateDriver`、`SPUUpdater` 本身保留（启动时 `updater.start()` 无害：自动检查被关，
+Debug 下只有开发者设置过 `UpdateFeedURL` 本地源才会主动查）。
+
+**合并上游后务必确认这两处没有被带回来**——尤其 `CompositorApp.swift` 是上游高频改动文件。
+
 ---
 
 ## 二、简体中文界面
@@ -309,4 +325,5 @@ python3 -c "import json; json.load(open('Compositor/Localizable.xcstrings'))"   
 - [ ] 格式说明符（`%@`/`%lld`/`%lf`）与被插值变量类型匹配吗？key 里的特殊符号逐字符一致吗？
 - [ ] 存盘字段（`rawValue`、工程格式）没被误翻译成中文吧？
 - [ ] Intel：`ARCHS` 仍是 `"arm64 x86_64"`，构建产物 `lipo -archs` 含 x86_64 吧？
+- [ ] 更新检查仍是禁用状态吧（1.5）：菜单无「Check for Updates…」、`SUEnableAutomaticChecks` 为 `false`？
 - [ ] 合并上游：冲突处保留了 `loc()`、新功能补了翻译、无冲突残留标记吧？

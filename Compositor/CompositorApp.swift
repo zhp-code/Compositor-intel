@@ -110,9 +110,9 @@ struct CompositorApp: App {
                 }
                 // Grouped: a commands builder takes at most ten items.
                 Group {
-                    CommandGroup(after: .appInfo) {
-                        Button("Check for Updates…") { applicationDelegate.updater.checkForUpdates() }
-                    }
+                    // This fork drops "Check for Updates…": Sparkle's feed points upstream, whose build is
+                    // Apple-silicon-only and English, so an update would overwrite the fork's work. See the fork
+                    // guide's 1.5 — restore this group after an upstream merge if the feed ever points here.
                     CommandGroup(after: .toolbar) {
                         Button("Search Commands…") {
                             CommandPaletteController.shared.toggle(session: session, over: applicationDelegate.projects.window)
