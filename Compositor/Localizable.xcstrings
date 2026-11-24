@@ -11617,6 +11617,516 @@
           }
         }
       }
+    },
+    "Extract Depth" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提取深度"
+          }
+        }
+      }
+    },
+    "Getting depth…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在计算深度…"
+          }
+        }
+      }
+    },
+    "Close the filter and add the depth the haze goes by as a new layer: white is near, black is far" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭滤镜并把雾气所依据的深度作为新图层加入：白色为近，黑色为远"
+          }
+        }
+      }
+    },
+    "Choose the light's color" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择光源颜色"
+          }
+        }
+      }
+    },
+    "Click or drag on the canvas to move the light" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在画布上点击或拖移以移动光源"
+          }
+        }
+      }
+    },
+    "How big the light is" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光源的大小"
+          }
+        }
+      }
+    },
+    "How bright the beams are" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光束的亮度"
+          }
+        }
+      }
+    },
+    "How far from the light the beams reach" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光束从光源延伸的距离"
+          }
+        }
+      }
+    },
+    "How far into the scene the haze begins: low reaches up to the camera, high leaves all but the farthest parts clear" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雾气在场景中从多远处开始：低则一直延伸到镜头前，高则除最远处外都保持清晰"
+          }
+        }
+      }
+    },
+    "How thick the air is: haze lit by the light, thinner in front of the subject" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空气的浓度：光束照亮的雾气，主体前方较薄"
+          }
+        }
+      }
+    },
+    "How much the beams break up into separate shafts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光束分散成独立光柱的程度"
+          }
+        }
+      }
+    },
+    "Keep Subject Clear" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保持主体清晰"
+          }
+        }
+      }
+    },
+    "Keep the subject clear of the haze; off, it's hazed by its own distance, so a figure far off is misted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让主体不受雾气影响；关闭后主体会按自身距离起雾，远处人物会显得朦胧"
+          }
+        }
+      }
+    },
+    "Spread out depths bunched together, such as a distant city, so the haze builds through them in steps; 0 keeps the depth as the model sees it" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "把挤在一起的深度（如远景城市）拉开，让雾气分层次递进；0 表示按模型所见保留深度"
+          }
+        }
+      }
+    },
+    "How much grain is smoothed from the picture's brightness" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从画面亮度中平滑掉的颗粒量"
+          }
+        }
+      }
+    },
+    "How much fine texture and edges are kept while the grain is smoothed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平滑颗粒时保留的细腻纹理与边缘"
+          }
+        }
+      }
+    },
+    "How much colored speckle is smoothed into the colors around it" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "彩色斑点被平滑融入周围颜色的程度"
+          }
+        }
+      }
+    },
+    "How many pixels to expand, contract or feather the selection by" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扩展、收缩或羽化选区的像素数"
+          }
+        }
+      }
+    },
+    "Fill color of the selected shape" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选形状的填充颜色"
+          }
+        }
+      }
+    },
+    "Color of the next line" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一条直线的颜色"
+          }
+        }
+      }
+    },
+    "Color of the selected line" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选直线的颜色"
+          }
+        }
+      }
+    },
+    "Dashes of the selected line; they grow with its width" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选直线的虚线样式；随线宽变粗"
+          }
+        }
+      }
+    },
+    "How this line's ends are finished" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直线端点的收尾方式"
+          }
+        }
+      }
+    },
+    "Round this rectangle's corners by this many pixels; 0 keeps them square" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将此矩形的圆角按此像素数取整；0 为直角"
+          }
+        }
+      }
+    },
+    "Stroke color" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "描边颜色"
+          }
+        }
+      }
+    },
+    "Stroke drawn inside the shape, in pixels. 0 draws none" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画在形状内侧的描边宽度（像素）。0 为不描边"
+          }
+        }
+      }
+    },
+    "Current color" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前颜色"
+          }
+        }
+      }
+    },
+    "The color before: click to go back to it" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一个颜色：点击可恢复"
+          }
+        }
+      }
+    },
+    "Reset colors" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置颜色"
+          }
+        }
+      }
+    },
+    "Reset colors to black and white (D)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置为黑白（D）"
+          }
+        }
+      }
+    },
+    "Smooth edges; turn off for hard pixel edges, like a pencil" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平滑边缘；关闭可获得铅笔般的硬像素边缘"
+          }
+        }
+      }
+    },
+    "Changes" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "改动内容"
+          }
+        }
+      }
+    },
+    "Layers, folders and masks kept · sRGB" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留图层、文件夹与蒙版 · sRGB"
+          }
+        }
+      }
+    },
+    "Other formats: TIFF, PDF and GIF, Channel Pack for game textures, and PSD to keep the layers for Photoshop" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他格式：TIFF、PDF 和 GIF、游戏纹理用的通道打包，以及为 Photoshop 保留图层的 PSD"
+          }
+        }
+      }
+    },
+    "Other formats: TIFF, PDF and GIF, EXR to keep light brighter than white, Channel Pack for game textures, and PSD to keep the layers for Photoshop" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他格式：TIFF、PDF 和 GIF、保留亮于白色的 EXR、游戏纹理用的通道打包，以及为 Photoshop 保留图层的 PSD"
+          }
+        }
+      }
+    },
+    "Replace" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换"
+          }
+        }
+      }
+    },
+    "“%@” already exists. Replace it?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”已存在，要替换吗？"
+          }
+        }
+      }
+    },
+    "%lld of these files already exist in “%@”. Replace them?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其中 %lld 个文件已存在于“%@”中，要替换吗？"
+          }
+        }
+      }
+    },
+    "“%@” has nothing to export" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”没有可导出的内容"
+          }
+        }
+      }
+    },
+    "%lld layers have nothing to export" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 个图层没有可导出的内容"
+          }
+        }
+      }
+    },
+    "A layer with no visible pixels, such as an adjustment layer, isn’t saved as a PNG." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有可见像素的图层（如调整图层）不会存为 PNG。"
+          }
+        }
+      }
+    },
+    "Couldn’t export layers" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法导出图层"
+          }
+        }
+      }
+    },
+    "Show Extras" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示额外选项"
+          }
+        }
+      }
+    },
+    "Distances" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "距离"
+          }
+        }
+      }
+    },
+    "Show Layers" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示图层"
+          }
+        }
+      }
+    },
+    "Hide Layers" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏图层"
+          }
+        }
+      }
+    },
+    "New filter layer" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建滤镜图层"
+          }
+        }
+      }
+    },
+    "Selection %lld × %lld px" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选区 %lld × %lld 像素"
+          }
+        }
+      }
+    },
+    "Feather %lld px" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "羽化 %lld 像素"
+          }
+        }
+      }
+    },
+    "Reduce Noise" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "减少杂色"
+          }
+        }
+      }
+    },
+    "Volumetric Light" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "体积光"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

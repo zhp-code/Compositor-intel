@@ -103,10 +103,11 @@ final class ProjectController {
             let existing = urls.filter { FileManager.default.fileExists(atPath: $0.path) }
             if !existing.isEmpty {
                 let alert = NSAlert()
-                alert.messageText = existing.count == 1 ? "“\(existing[0].lastPathComponent)” already exists. Replace it?"
-                    : "\(existing.count) of these files already exist in “\(url.lastPathComponent)”. Replace them?"
-                alert.addButton(withTitle: "Replace")
-                alert.addButton(withTitle: "Cancel")
+                alert.messageText = existing.count == 1
+                    ? String(format: loc("“%@” already exists. Replace it?"), existing[0].lastPathComponent)
+                    : String(format: loc("%lld of these files already exist in “%@”. Replace them?"), existing.count, url.lastPathComponent)
+                alert.addButton(withTitle: loc("Replace"))
+                alert.addButton(withTitle: loc("Cancel"))
                 guard await show(alert) == .alertFirstButtonReturn else { return }
             }
         }
@@ -120,12 +121,14 @@ final class ProjectController {
                 }
                 try await ImageExporter.shared.write(data, to: url)
             }
-        } catch { await showError("Couldn’t export layers", error: error); return }
+        } catch { await showError(loc("Couldn’t export layers"), error: error); return }
         if !empty.isEmpty {
             let alert = NSAlert()
-            alert.messageText = empty.count == 1 ? "“\(empty[0])” has nothing to export" : "\(empty.count) layers have nothing to export"
-            alert.informativeText = "A layer with no visible pixels, such as an adjustment layer, isn’t saved as a PNG."
-            alert.addButton(withTitle: "OK")
+            alert.messageText = empty.count == 1
+                ? String(format: loc("“%@” has nothing to export"), empty[0])
+                : String(format: loc("%lld layers have nothing to export"), empty.count)
+            alert.informativeText = loc("A layer with no visible pixels, such as an adjustment layer, isn’t saved as a PNG.")
+            alert.addButton(withTitle: loc("OK"))
             _ = await show(alert)
         }
     }

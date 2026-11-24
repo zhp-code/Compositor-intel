@@ -346,9 +346,10 @@ struct ContentView: View {
                     .frame(width: 62, alignment: .leading).accessibilityIdentifier("zoomStatus")
                 Text("\(document.width) × \(document.height) px").accessibilityIdentifier("canvasDimensions")
                 if let draft = session.shapeDraft, let size = session.dragOutSize {
-                    Text("\(draft.kind == .line ? "Line" : "Shape") \(size.text)").accessibilityIdentifier("shapeDimensions")
+                    Text(loc(draft.kind == .line ? "Line" : "Shape") + " \(size.text)").accessibilityIdentifier("shapeDimensions")
                 } else if let size = session.selectionSize {
-                    Text("Selection \(size.width) × \(size.height) px" + (session.selectionFeather.map { " · Feather \($0) px" } ?? ""))
+                    Text(String(format: loc("Selection %lld × %lld px"), size.width, size.height)
+                         + (session.selectionFeather.map { " · " + String(format: loc("Feather %lld px"), $0) } ?? ""))
                         .accessibilityIdentifier("selectionDimensions")
                 }
                 Text("sRGB · Transparent")
