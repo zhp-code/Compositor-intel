@@ -7,10 +7,12 @@ struct EditorCanvas: NSViewRepresentable {
     func updateNSView(_ view: CanvasView, context: Context) {
         view.consumeFocusRequest(session.canvasFocusRequest)
         _ = session.showsTransformControls // observed here so ⌘H redraws the transform box at once
+        _ = session.hiddenSelectionEdges // and the selection's outline
         _ = session.showsGrid
         _ = session.layoutGrid
         _ = session.gridAppearance
         _ = session.showsGuides
+        _ = session.extrasHideGuides
         _ = session.guideDrag
         _ = session.document?.guides
         view.synchronizeDisplay()
@@ -27,13 +29,17 @@ final class CanvasView: NSView {
     private var adjustmentCache: [UUID: (key: [String], image: CIImage)] = [:]
     /// Off, each adjustment is computed every frame, as before the cache: for comparing the two.
     var cachesAdjustments = true
-    /// A Lens Effects layer's picture made as Copy Merged and the export make it — everything up to and including the
-    /// layer, at the document's own pixels, by the same code — with what it was made from. Shown in place of the
-    /// canvas's own working while that still matches, so what's on screen is what copying it gives.
-    private var lensExact: [UUID: (key: [String], image: CGImage)] = [:]
-    /// What each Lens Effects layer was made from on the last frame, and the one waiting to be made exactly.
-    private var lensLatest: [UUID: [String]] = [:]
-    private var lensWaiting: [UUID: [String]] = [:]
+    /// A Reduce Noise or Lens Effects layer's picture: what's under it, worked on at the document's own pixels by the
+    /// export's code, with what it was made from. Placed each frame while that still matches, rather than worked out
+    /// again for every pan and zoom: its key leaves out the frame, which only places it.
+    private var exactAdjustments: [UUID: (key: [String], image: CGImage)] = [:]
+    /// What each such layer was made from on the last frame, and the one waiting to be made.
+    private var exactLatest: [UUID: [String]] = [:]
+    private var exactWaiting: [UUID: [String]] = [:]
+    /// Whether every Reduce Noise and Lens Effects layer on the last frame has its picture made for what it showed.
+    var adjustmentsSettled: Bool { exactLatest.allSatisfy { exactAdjustments[$0.key]?.key == $0.value } }
+    /// The adjustments too slow to work out every frame, which `exactAdjustments` keeps instead.
+    private static let keptExactly: Set<AdjustmentKind> = [.reduceNoise, .lensEffects]
     /// The effects rendered for the text being edited, and what they were rendered from.
     private var draftEffects: (image: CGImage, effects: LayerEffects, transform: LayerTransform, rendered: CGImage, inset: CGFloat)?
     /// Which layer and text `draftEffects` were made for, so they can stand in once the edit is committed.
@@ -119,6 +125,8 @@ final class CanvasView: NSView {
     private var progressiveDrag: GradientHandle?
     /// RGB Split's center being dragged.
     private var rgbSplitDrag = false
+    /// Volumetric Light's light being dragged on the canvas.
+    private var volumetricDrag = false
     private var antsTimer: Timer?
     private var modifierMonitor: Any?
     private var sampleClickMonitor: Any?
@@ -140,6 +148,9 @@ final class CanvasView: NSView {
     private var marqueeConstrainArmed = true
     /// The Marquee draft's latest drag point, so a Shift change can reshape it without a mouse move.
     private var marqueeDragPixel: CGPoint?
+    /// Where the pointer and the Marquee's starting corner were when Space went down mid-drag: while it's held, the box
+    /// moves with the pointer rather than resizing, as in Photoshop.
+    private var marqueeMoveStart: (pixel: CGPoint, anchor: CGPoint, size: CGSize)?
     /// While a Marquee is dragged against or past the canvas edge, pans the view toward the pointer.
     private var marqueeAutoscroll: Timer?
     private var marqueeAutoscrollPoint: CGPoint?
@@ -210,7 +221,32 @@ final class CanvasView: NSView {
     }
     /// Photoshop's duplicate pointer: a black arrow over a white one offset behind it. Shown where a
     /// drag copies — Option-dragging a layer, Cmd-Option-dragging selected pixels.
-    static let duplicateCursor = arrowCursor([(offset: 5, fill: .white, outline: .black), (offset: 0, fill: .black, outline: .white)])
+    /// Option-dragging a layer copies it: Photoshop's pointer for that, a black arrowhead with a white one behind it to the
+    /// right, neither with a stem, so the two stay apart at cursor size. The black one's tip is the click point.
+    static let duplicateCursor: NSCursor = {
+        // Room round the tip for the outline and shadow, as the other arrows have.
+        let margin: CGFloat = 4
+        func head(_ dx: CGFloat, _ dy: CGFloat) -> NSBezierPath {
+            let path = NSBezierPath()
+            // Drawn a point above the hot spot, so it sits where the system arrow and the Move and transform
+            // pointers do: switching to it with Option, nothing seems to jump.
+            let top = margin - 1
+            path.move(to: NSPoint(x: margin + dx, y: top + dy))
+            path.line(to: NSPoint(x: margin + dx, y: top + dy + 13))
+            path.line(to: NSPoint(x: margin + dx + 3.8, y: top + dy + 10))
+            path.line(to: NSPoint(x: margin + dx + 9.5, y: top + dy + 10))
+            path.close()
+            path.lineJoinStyle = .round
+            return path
+        }
+        // Outlined and shadowed as the app's other pointers are: each line width is twice the outline that shows.
+        let copy = head(7.5, 3.5)
+        copy.lineWidth = 1.1
+        let pointer = head(0, 0)
+        pointer.lineWidth = 2.2
+        return outlinedCursor(size: NSSize(width: 28, height: 28), hotSpot: NSPoint(x: margin, y: margin),
+                              [(copy, .white, .black), (pointer, .black, .white)])
+    }()
     /// A white arrow over a transform handle that distorts when dragged (Cmd held, or already distorted).
     static let distortCursor = arrowCursor([(offset: 0, fill: .white, outline: .black)])
     /// Photoshop's Move pointer: the arrow with a small four-way arrow at its lower right. Shown wherever
@@ -423,23 +459,63 @@ final class CanvasView: NSView {
     private var displayedCropRect: CGRect?
     private var displayedTransformGeometry: TransformOverlayGeometry?
     private var hoverTrackingArea: NSTrackingArea?
-    private static let rotationCursor: NSCursor = {
-        let symbol = NSImage(systemSymbolName: "arrow.triangle.2.circlepath", accessibilityDescription: "Rotate")!
-        let white = symbol.withSymbolConfiguration(.init(paletteColors: [.white]))!
-        let black = symbol.withSymbolConfiguration(.init(paletteColors: [.black]))!
-        let image = NSImage(size: NSSize(width: 24, height: 24), flipped: false) { _ in
-            let glyph = CGRect(x: 2, y: 2, width: 20, height: 20)
-            // Expand the white silhouette, then draw the black symbol on top.
-            for step in 0..<16 {
-                let angle = CGFloat(step) * .pi / 8
-                white.draw(in: glyph.offsetBy(dx: cos(angle) * 1.25, dy: sin(angle) * 1.25))
+    /// The rotate pointer: a curved double arrow wrapped around the corner it's beside, turned to face out from the
+    /// box through that corner (`angle`, y up), in sixteen steps, made once each.
+    private static var rotationCursors: [Int: NSCursor] = [:]
+    static func rotationCursor(angle: CGFloat) -> NSCursor {
+        let steps = 16
+        let step = ((Int((angle / (2 * .pi) * CGFloat(steps)).rounded()) % steps) + steps) % steps
+        if let cursor = rotationCursors[step] { return cursor }
+        let turn = CGFloat(step) / CGFloat(steps) * 2 * .pi
+        let size: CGFloat = 28
+        let image = NSImage(size: NSSize(width: size, height: size), flipped: false) { _ in
+            guard let context = NSGraphicsContext.current?.cgContext else { return false }
+            context.translateBy(x: size / 2, y: size / 2)
+            context.rotate(by: turn)
+            // Facing right: a gentle arc bulging outward around a center behind it, and at each end a solid head
+            // pointing on along the arc, so the curve and its arrows read apart even this small.
+            // Three quarters of its first size, so it sits level with the corner resize arrows; the lines keep their weight.
+            let scale: CGFloat = 0.75
+            let radius: CGFloat = 10.5 * scale, center = CGPoint(x: -6.5 * scale, y: 0), sweep: CGFloat = .pi / 4.4
+            let arc = CGMutablePath()
+            arc.addArc(center: center, radius: radius, startAngle: -sweep, endAngle: sweep, clockwise: false)
+            let heads = CGMutablePath()
+            for end in [-sweep, sweep] {
+                let base = CGPoint(x: center.x + cos(end) * radius, y: center.y + sin(end) * radius)
+                // The way the arc runs at this end, away from its middle.
+                let sign: CGFloat = end > 0 ? 1 : -1
+                let along = CGVector(dx: -sin(end) * sign, dy: cos(end) * sign)
+                let side = CGVector(dx: -along.dy, dy: along.dx)
+                heads.move(to: CGPoint(x: base.x + along.dx * 5.5 * scale, y: base.y + along.dy * 5.5 * scale))
+                heads.addLine(to: CGPoint(x: base.x + side.dx * 3.6 * scale, y: base.y + side.dy * 3.6 * scale))
+                heads.addLine(to: CGPoint(x: base.x - side.dx * 3.6 * scale, y: base.y - side.dy * 3.6 * scale))
+                heads.closeSubpath()
             }
-            black.draw(in: glyph)
+            // A white outline first, so it shows on dark and light alike, then the black arrow over it.
+            context.setLineCap(.round)
+            context.setLineJoin(.round)
+            context.setStrokeColor(NSColor.white.cgColor)
+            context.setFillColor(NSColor.white.cgColor)
+            context.setLineWidth(4.2)
+            context.addPath(arc)
+            context.strokePath()
+            context.setLineWidth(2.6)
+            context.addPath(heads)
+            context.drawPath(using: .fillStroke)
+            context.setStrokeColor(NSColor.black.cgColor)
+            context.setFillColor(NSColor.black.cgColor)
+            context.setLineWidth(1.5)
+            context.addPath(arc)
+            context.strokePath()
+            context.addPath(heads)
+            context.fillPath()
             return true
         }
-        return NSCursor(image: image, hotSpot: NSPoint(x: 12, y: 12))
-    }()
-    private static let eyedropperCursor = makeEyedropperCursor(badge: nil)
+        let cursor = NSCursor(image: image, hotSpot: NSPoint(x: size / 2, y: size / 2))
+        rotationCursors[step] = cursor
+        return cursor
+    }
+    static let eyedropperCursor = makeEyedropperCursor(badge: nil)
     /// Color Range's eyedroppers while Shift (add) or Option (take away) is held, or its + or − one is chosen.
     private static let eyedropperAddCursor = makeEyedropperCursor(badge: "plus")
     private static let eyedropperRemoveCursor = makeEyedropperCursor(badge: "minus")
@@ -782,6 +858,7 @@ final class CanvasView: NSView {
             if self.session.document != nil, self.session.tool == .move, let window = self.window {
                 let point = self.convert(window.mouseLocationOutsideOfEventStream, from: nil)
                 if self.visibleRect.contains(point) { self.updateTransformCursor(at: point, flags: event.modifierFlags) }
+                self.updateHoverDistances(at: point, flags: event.modifierFlags)
             }
             return event
         }
@@ -1177,9 +1254,21 @@ final class CanvasView: NSView {
         }
         // The shape being dragged out previews where its layer will go — above the active layer — rather than over
         // everything, so the layers above it cover it as they will once it is made.
+        // Over the top of a clipping stack, the new layer won't be clipped, so the shape previews above the whole stack,
+        // unclipped, rather than clipped and then showing in full on release.
+        // With the active layer hidden, it previews above the nearest layer under it that shows (see `draftPlace`).
+        let renderIDs = document.renderLayers.map(\.id)
+        let place = draftPlace(document)
+        let anchor: UUID? = if case .above(let id) = place { id } else { nil }
+        let stackTop: (base: UUID, top: UUID)? = {
+            guard let anchor, let layer = byID[anchor], let base = layer.maskSourceID,
+                  let index = renderIDs.firstIndex(of: anchor) else { return nil }
+            let next = renderIDs.indices.contains(index + 1) ? byID[renderIDs[index + 1]] : nil
+            return next?.maskSourceID == base && next?.parentID == layer.parentID ? nil : (base, anchor)
+        }()
         func drawOwnWithDraft(_ id: UUID, _ context: CGContext) {
             drawOwn(id, context)
-            guard id == session.activeLayerID else { return }
+            guard id == anchor, stackTop?.top != id else { return }
             drawShapeDraft(scale: scale, center: center, in: context)
             drawNewText(context)
         }
@@ -1216,6 +1305,10 @@ final class CanvasView: NSView {
                 FolderMaskClip(image: image, transform: layer.transform).apply(scale: scale, center: center(layer.transform.center), in: ctx)
             }
         }
+        if place == .bottom {
+            drawShapeDraft(scale: scale, center: center, in: context)
+            drawNewText(context)
+        }
         live.prepareStacks(document.renderLayers.map(\.id), parent: { byID[$0]?.parentID }, blend: { byID[$0].map { session.displayedBlendMode(for: $0) } ?? .normal })
         FolderMaskClip.draw(document.renderLayers.map(\.id), parent: { byID[$0]?.parentID }, clip: { id in
             guard let folder = byID[id], let mask = folder.mask, mask.isEnabled else { return nil }
@@ -1227,7 +1320,13 @@ final class CanvasView: NSView {
             let clip = FolderMaskClip(image: displayImage(mask.asset.image, width: transform.size.width * scale, in: context), transform: transform)
             let origin = center(transform.center)
             return { clip.apply(scale: scale, center: origin, in: $0) }
-        }, in: context) { live.drawComposite($0, in: context) }
+        }, in: context) { id in
+            live.drawComposite(id, in: context)
+            if let stackTop, id == stackTop.base {
+                drawShapeDraft(scale: scale, center: center, in: context)
+                drawNewText(context)
+            }
+        }
         drawNewText(context)
     }
 
@@ -1273,17 +1372,20 @@ final class CanvasView: NSView {
         let rect = CGRect(x: middle.x - draft.rect.width * scale / 2, y: middle.y - draft.rect.height * scale / 2,
                           width: draft.rect.width * scale, height: draft.rect.height * scale)
         context.saveGState()
-        context.setFillColor(session.foregroundColor.nsColor.cgColor)
+        context.setFillColor(draft.fill.nsColor.cgColor)
         if draft.kind == .line {
             guard let ends = session.shapeLineEnds else { context.restoreGState(); return }
-            let thickness = max(1, CGFloat(session.shapeLineWidth) * scale)
-            context.setStrokeColor(session.foregroundColor.nsColor.cgColor)
+            let thickness = max(1, draft.lineWidth * scale)
+            context.setStrokeColor(draft.fill.nsColor.cgColor)
             // Exactly the two points being dragged between, so the start never shifts.
             context.strokeShapeLine(from: center(ends.start), to: center(ends.end), width: thickness,
                                     style: draft.lineStyle, cap: draft.lineCap)
         } else {
-            context.addPath(draft.kind.path(in: rect, cornerRadius: draft.cornerRadius * scale, smoothing: draft.smoothing))
-            context.fillPath()
+            // The same inside stroke the finished shape gets, so it shows while the box is still being dragged rather
+            // than only once the mouse is released.
+            let path = draft.kind.path(in: rect, cornerRadius: draft.cornerRadius * scale, smoothing: draft.smoothing)
+            EditorSession.fillShape(path, color: draft.fill.nsColor.cgColor, stroke: draft.strokeColor.nsColor.cgColor,
+                                    strokeWidth: min(draft.strokeWidth * scale, min(rect.width, rect.height) / 2), in: context)
         }
         context.restoreGState()
     }
@@ -1621,6 +1723,7 @@ final class CanvasView: NSView {
     override func mouseEntered(with event: NSEvent) { mouseMoved(with: event) }
     override func mouseExited(with event: NSEvent) {
         session.filterEdit?.cameraRawReadout = nil
+        if transformDrag == nil, !session.distanceLines.isEmpty { session.distanceLines = []; transformOverlay.needsDisplay = true }
         brushPointer = nil
         updateBrushCursor()
         // Tools set their cursor directly while over the canvas, so put the arrow back on the
@@ -1659,8 +1762,24 @@ final class CanvasView: NSView {
         if [Self.eyedropperCursor, Self.eyedropperAddCursor, Self.eyedropperRemoveCursor].contains(NSCursor.current) { restoreToolCursor() }
         brushPointer = convert(event.locationInWindow, from: nil)
         updateBrushCursor()
-        if session.tool == .move { updateTransformCursor(at: convert(event.locationInWindow, from: nil), flags: event.modifierFlags) }
+        if session.tool == .move {
+            updateTransformCursor(at: convert(event.locationInWindow, from: nil), flags: event.modifierFlags)
+            updateHoverDistances(at: convert(event.locationInWindow, from: nil), flags: event.modifierFlags)
+        }
         else { super.mouseMoved(with: event) }
+    }
+    /// The Move tool with Command held, between drags: the gaps from the selected layers to the layer under the pointer,
+    /// or to the canvas's edges.
+    private func updateHoverDistances(at point: CGPoint, flags: NSEvent.ModifierFlags) {
+        guard transformDrag == nil else { return }
+        var lines: [DistanceLine] = []
+        if session.showsDistances, session.tool == .move, flags.contains(.command), visibleRect.contains(point),
+           let document = session.document {
+            lines = session.hoverDistances(at: session.viewport.documentPoint(from: point, documentSize: document.size))
+        }
+        guard lines != session.distanceLines else { return }
+        session.distanceLines = lines
+        transformOverlay.needsDisplay = true
     }
     override func cursorUpdate(with event: NSEvent) {
         guard session.document != nil else { return }
@@ -1690,7 +1809,7 @@ final class CanvasView: NSView {
                 // Distorting (Cmd held, or already distorted) moves corners freely: the white arrow says so.
                 let distorting = session.transformEdit?.corners != nil || flags.contains(.command)
                 return distorting ? Self.distortCursor : geometry.resizeCursor(for: index)
-            case .rotate: return Self.rotationCursor
+            case .rotate: return Self.rotationCursor(angle: geometry.rotationAngle(at: point))
             case .move: return duplicate ? Self.duplicateCursor : Self.moveCursor
             case .distort: return Self.distortCursor
             }
@@ -1828,6 +1947,13 @@ final class CanvasView: NSView {
             synchronizeDisplay()
             return
         }
+        // With the color picker open, a click samples the light's color (below) rather than moving the light.
+        if session.filterEdit?.kind == .volumetricLight, session.colorPicker == nil, !spaceHeld, let document = session.document {
+            session.moveVolumetricLight(to: session.viewport.documentPoint(from: point, documentSize: document.size))
+            volumetricDrag = true
+            synchronizeDisplay()
+            return
+        }
         if session.levels?.sampleMode != nil, !spaceHeld, let document = session.document {
             session.sampleLevels(at: session.viewport.documentPoint(from: point, documentSize: document.size))
             FloatingPanelController.refocus(NSUserInterfaceItemIdentifier("levelsPanel"))
@@ -1924,6 +2050,11 @@ final class CanvasView: NSView {
         }
         if rgbSplitDrag, let document = session.document {
             session.moveRGBSplitCenter(to: session.viewport.documentPoint(from: point, documentSize: document.size))
+            synchronizeDisplay()
+            return
+        }
+        if volumetricDrag, let document = session.document {
+            session.moveVolumetricLight(to: session.viewport.documentPoint(from: point, documentSize: document.size))
             synchronizeDisplay()
             return
         }
@@ -2079,6 +2210,16 @@ final class CanvasView: NSView {
                 if case .move = drag.mode, !event.modifierFlags.contains(.control) {
                     draft = session.snappedMove(draft, moving: moving, tolerance: tolerance)
                 }
+                if case .move = drag.mode, session.showsDistances { session.distanceLines = session.movingDistances(draft, moving: moving) }
+                else { session.distanceLines = [] }
+                if case .resize = drag.mode {
+                    session.resizeSize = ("\(Int(abs(draft.size.width).rounded())) × \(Int(abs(draft.size.height).rounded())) px", pixel)
+                }
+                // The angle beside the pointer as it turns, as the size is beside it as it scales: −180° to 180°.
+                if case .rotate = drag.mode {
+                    let degrees = Int(draft.rotation.rounded())
+                    session.resizeSize = ("\(((degrees + 180) % 360 + 360) % 360 - 180)°", pixel)
+                }
                 session.previewTransform(draft)
             }
             synchronizeDisplay()
@@ -2140,8 +2281,9 @@ final class CanvasView: NSView {
         window?.invalidateCursorRects(for: self)
     }
     override func mouseUp(with event: NSEvent) {
-        if rgbSplitDrag {
+        if rgbSplitDrag || volumetricDrag {
             rgbSplitDrag = false
+            volumetricDrag = false
             FloatingPanelController.refocus(NSUserInterfaceItemIdentifier("filterPanel"))
             return
         }
@@ -2168,6 +2310,8 @@ final class CanvasView: NSView {
             return
         }
         session.snapGuides = ([], [])
+        session.distanceLines = []
+        session.resizeSize = nil
         if guideDragging {
             session.finishGuideDrag(delete: isOverRuler(convert(event.locationInWindow, from: nil)))
             guideDragging = false
@@ -2243,7 +2387,8 @@ final class CanvasView: NSView {
         guard transformDrag == nil, cropDrag == nil, !guideDragging, session.brushStroke == nil, session.warpStroke == nil else { return }
         guard session.document != nil else { return }
         if event.modifierFlags.contains(.command) || event.modifierFlags.contains(.option) {
-            session.zoom(to: session.viewport.zoom * exp(-event.scrollingDeltaY * 0.015),
+            session.zoom(to: session.viewport.zoom * Self.wheelZoomFactor(deltaY: event.scrollingDeltaY,
+                                                                         inverted: event.isDirectionInvertedFromDevice),
                          anchor: convert(event.locationInWindow, from: nil))
         } else {
             let multiplier: CGFloat = event.hasPreciseScrollingDeltas ? 1 : 12
@@ -2251,6 +2396,13 @@ final class CanvasView: NSView {
                                                   height: event.scrollingDeltaY * multiplier))
             redrawRulers()
         }
+    }
+    /// How much an Option- or Command-scroll zooms: in as the wheel turns away from you, out as it turns toward you, as in
+    /// Photoshop and every other editor, whichever way macOS's natural scrolling is set. That setting flips the deltas,
+    /// so they're turned back to the way the wheel or fingers actually moved; read as they came, the zoom went backwards
+    /// for anyone with natural scrolling off.
+    static func wheelZoomFactor(deltaY: CGFloat, inverted: Bool) -> CGFloat {
+        exp((inverted ? -deltaY : deltaY) * 0.015)
     }
     override func magnify(with event: NSEvent) {
         guard transformDrag == nil, cropDrag == nil, !guideDragging, session.brushStroke == nil, session.warpStroke == nil else { return }
@@ -2326,10 +2478,13 @@ final class CanvasView: NSView {
             session.nudgeSelection(dx: event.keyCode == 123 ? -step : event.keyCode == 124 ? step : 0,
                                    dy: event.keyCode == 126 ? -step : event.keyCode == 125 ? step : 0)
         } else if session.tool == .move, [123, 124, 125, 126].contains(event.keyCode),
-                  event.modifierFlags.intersection([.command, .control, .option]).isEmpty {
+                  event.modifierFlags.intersection([.command, .control]).isEmpty {
+            // Shift for 10 px; Option moves a copy, leaving the layer where it was.
             let step: CGFloat = event.modifierFlags.contains(.shift) ? 10 : 1
-            session.nudgeLayer(dx: event.keyCode == 123 ? -step : event.keyCode == 124 ? step : 0,
-                               dy: event.keyCode == 126 ? -step : event.keyCode == 125 ? step : 0)
+            let dx: CGFloat = event.keyCode == 123 ? -step : event.keyCode == 124 ? step : 0
+            let dy: CGFloat = event.keyCode == 126 ? -step : event.keyCode == 125 ? step : 0
+            if event.modifierFlags.contains(.option) { session.duplicateAndNudgeLayer(dx: dx, dy: dy) }
+            else { session.nudgeLayer(dx: dx, dy: dy) }
         } else if (event.keyCode == 51 || event.keyCode == 117),
            event.modifierFlags.intersection([.command, .control, .option]).isEmpty {
             session.deleteKeyPressed()
@@ -2341,6 +2496,8 @@ final class CanvasView: NSView {
         } else if event.keyCode == 49 {
             panPhysicalKey = physicalKey
             spaceHeld = true
+            // Drawing a Marquee, Space moves the box rather than panning: the cursor stays as it is.
+            if session.lassoDraft?.anchor != nil { return }
             updateBrushCursor()
             window?.invalidateCursorRects(for: self)
             refreshPointerCursor()
@@ -2385,6 +2542,7 @@ final class CanvasView: NSView {
         if event.keyCode == panPhysicalKey || (panPhysicalKey == nil && event.keyCode == 49) {
             panPhysicalKey = nil
             spaceHeld = false
+            if session.lassoDraft?.anchor != nil { return }
             updateBrushCursor()
             window?.invalidateCursorRects(for: self)
             refreshPointerCursor()
@@ -2479,8 +2637,23 @@ final class CanvasView: NSView {
 
     private func dragMarqueeDraft(to pixel: CGPoint, flags: NSEvent.ModifierFlags) {
         if !flags.contains(.shift) { marqueeConstrainArmed = true }
-        marqueeDragPixel = pixel
-        session.dragMarquee(to: snappedCorner(pixel, flags: flags), square: marqueeConstrainArmed && flags.contains(.shift), fromCenter: false)
+        defer { marqueeDragPixel = pixel }
+        guard spaceHeld, let draft = session.lassoDraft, let anchor = draft.anchor, let first = draft.points.first else {
+            marqueeMoveStart = nil
+            session.dragMarquee(to: snappedCorner(pixel, flags: flags), square: marqueeConstrainArmed && flags.contains(.shift), fromCenter: false)
+            return
+        }
+        // Space held: the box keeps its size and follows the pointer, its corners on whole pixels.
+        if marqueeMoveStart == nil {
+            let box = draft.points.dropFirst().reduce(CGRect(origin: first, size: .zero)) { $0.union(CGRect(origin: $1, size: .zero)) }
+            let far = CGPoint(x: anchor.x == box.minX ? box.maxX : box.minX, y: anchor.y == box.minY ? box.maxY : box.minY)
+            marqueeMoveStart = (marqueeDragPixel ?? pixel, anchor, CGSize(width: far.x - anchor.x, height: far.y - anchor.y))
+        }
+        guard let start = marqueeMoveStart else { return }
+        let moved = CGPoint(x: (start.anchor.x + pixel.x - start.pixel.x).rounded(), y: (start.anchor.y + pixel.y - start.pixel.y).rounded())
+        session.snapGuides = ([], [])
+        session.moveMarqueeAnchor(to: moved)
+        session.dragMarquee(to: CGPoint(x: moved.x + start.size.width, y: moved.y + start.size.height), square: false, fromCenter: false)
     }
 
     /// Freehand starts an outline to drag. Polygonal adds a corner per click and closes on
@@ -2491,6 +2664,7 @@ final class CanvasView: NSView {
         // A Shift held at the press means Add; for the Marquee it squares only once pressed afresh.
         marqueeConstrainArmed = !event.modifierFlags.contains(.shift)
         marqueeDragPixel = nil
+        marqueeMoveStart = nil
         let pixel = session.viewport.documentPoint(from: point, documentSize: document.size)
         guard let draft = session.lassoDraft, draft.kind == .polygonal else {
             // Cmd-drag inside the selection cuts and moves its pixels (Photoshop's temporary Move tool).
@@ -2531,7 +2705,7 @@ final class CanvasView: NSView {
 
     /// Marching ants animate only while a visible selection exists.
     private func updateAntsTimer() {
-        let active = session.selection?.isEmpty == false && window != nil
+        let active = session.selection?.isEmpty == false && session.showsSelectionEdges && window != nil
         if active, antsTimer == nil {
             let timer = Timer(timeInterval: 0.12, repeats: true) { [weak self] _ in
                 // A redraw still pending skips this tick: a slow outline stutters rather than queuing redraws forever.
@@ -2698,7 +2872,7 @@ final class CanvasView: NSView {
         transformDrag = TransformDrag(original: transform, start: pixel, mode: mode, originalCorners: session.transformEdit?.corners)
         switch mode {
         case .resize(let index): dragCursor = transformOverlay.geometry?.resizeCursor(for: index) ?? .arrow
-        case .rotate: dragCursor = Self.rotationCursor
+        case .rotate: dragCursor = transformOverlay.geometry.map { Self.rotationCursor(angle: $0.rotationAngle(at: point)) } ?? .arrow
         case .move: dragCursor = duplicatesTransformOnDrag ? Self.duplicateCursor : Self.moveCursor
         case .distort: dragCursor = Self.distortCursor
         }
@@ -2767,34 +2941,34 @@ extension CanvasView {
         return true
     }
 
-    /// Makes `id`'s picture as Copy Merged would — the document with everything above the layer hidden, composited by the
-    /// export's code — once the canvas has settled on `key`, then redraws to show it.
-    private func makeLensExact(_ id: UUID, key: [String]) {
-        guard lensWaiting[id] != key else { return }
-        lensWaiting[id] = key
+    /// Makes `id`'s picture once the canvas has settled on `key`: what's under it composited as Copy Merged would, on
+    /// the main thread, then the adjustment worked on it off it (the slow part), then a redraw to show it.
+    private func makeExact(_ id: UUID, key: [String], adjustment: LayerAdjustment) {
+        guard exactWaiting[id] != key else { return }
+        exactWaiting[id] = key
         // On the run loop, so it waits while a drag or a slider keeps the canvas busy.
         Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) { [weak self] _ in MainActor.assumeIsolated {
-            guard let self, self.lensWaiting[id] == key else { return }
-            self.lensWaiting[id] = nil
-            // Only if the canvas still shows what this was asked for.
-            guard self.lensLatest[id] == key, var document = self.session.document,
+            guard let self, self.exactWaiting[id] == key else { return }
+            self.exactWaiting[id] = nil
+            guard self.exactLatest[id] == key, var document = self.session.document,
                   document.layers.contains(where: { $0.id == id }) else { return }
-            let underneath = Set(document.renderLayers.map(\.id).prefix { $0 != id }).union([id])
+            let underneath = Set(document.renderLayers.map(\.id).prefix { $0 != id })
             for index in document.layers.indices where document.layers[index].isGroup != true && !underneath.contains(document.layers[index].id) {
                 document.layers[index].isVisible = false
-            }
-            // Its own mask and opacity go on over it on the canvas.
-            if let index = document.layers.firstIndex(where: { $0.id == id }) {
-                document.layers[index].mask?.isEnabled = false
-                document.layers[index].opacity = 1
             }
             let width = Int(document.size.width.rounded()), height = Int(document.size.height.rounded())
             guard let context = try? BrushRaster.context(width: width, height: height, mask: false) else { return }
             self.session.drawLiveComposite(document, in: context)
-            guard let image = context.makeImage() else { return }
-            self.lensExact = self.lensExact.filter { self.lensLatest[$0.key] != nil }
-            self.lensExact[id] = (key, image)
-            self.needsDisplay = true
+            guard let below = context.makeImage() else { return }
+            Task.detached(priority: .userInitiated) {
+                guard let image = try? adjustment.apply(below, document: document.size) else { return }
+                await MainActor.run {
+                    guard self.exactLatest[id] == key else { return }
+                    self.exactAdjustments = self.exactAdjustments.filter { self.exactLatest[$0.key] != nil }
+                    self.exactAdjustments[id] = (key, image)
+                    self.needsDisplay = true
+                }
+            }
         } }
     }
 
@@ -2804,10 +2978,47 @@ extension CanvasView {
         return gpuFrame(document, renderer: renderer, size: size)
     }
 
+    /// Where a shape being dragged out or new text previews among the layers.
+    private enum DraftPlace: Equatable {
+        /// Just above this layer.
+        case above(UUID)
+        /// Under every layer.
+        case bottom
+        /// Nowhere among the layers: its layer will be in a hidden folder.
+        case hidden
+    }
+
+    /// Just above the active layer — or, when that isn't drawn (hidden), above the nearest layer under it that is, since
+    /// that's where the new layer will show. With a folder selected, above its topmost contents, where the new layer
+    /// goes. With no active layer, it goes on top.
+    private func draftPlace(_ document: CanvasDocument) -> DraftPlace {
+        let hierarchy = document.hierarchy
+        guard let active = session.activeLayer, var index = hierarchy.order.firstIndex(of: active.id) else {
+            return hierarchy.drawn.last.map(DraftPlace.above) ?? .bottom
+        }
+        if let parent = active.isGroup ? active.id : active.parentID, !hierarchy.visible.contains(parent) { return .hidden }
+        if active.isGroup {
+            // The folder's contents follow it in the order; the new layer goes after the last of them.
+            let parents = Dictionary(uniqueKeysWithValues: document.layers.map { ($0.id, $0.parentID) })
+            func isInside(_ id: UUID) -> Bool {
+                var parent = parents[id] ?? nil, steps = 0
+                while let current = parent, steps < 64 {
+                    if current == active.id { return true }
+                    parent = parents[current] ?? nil
+                    steps += 1
+                }
+                return false
+            }
+            while hierarchy.order.indices.contains(index + 1), isInside(hierarchy.order[index + 1]) { index += 1 }
+        }
+        let drawn = Set(hierarchy.drawn)
+        return hierarchy.order[...index].last(where: drawn.contains).map(DraftPlace.above) ?? .bottom
+    }
+
     /// The shape being dragged out, drawn by `drawShapeDraft` into a bitmap just big enough for it, in frame pixels.
     private func shapeDraftImage(placement: GPUPlacement) -> CIImage? {
         guard let draft = session.shapeDraft, let renderer = GPUCanvasRenderer.shared else { return nil }
-        let reach = CGFloat(session.shapeLineWidth) * placement.scale + 4
+        let reach = (draft.kind == .line ? draft.lineWidth * placement.scale : 0) + 4
         let box = draft.rect.applying(placement.mapping).insetBy(dx: -reach, dy: -reach).integral
         guard box.width >= 1, box.height >= 1, box.width * box.height <= DocumentLimits.maxSurfaceExtent,
               let context = try? BrushRaster.context(width: Int(box.width), height: Int(box.height), mask: false) else { return nil }
@@ -3245,21 +3456,23 @@ extension CanvasView {
         }
         // An adjustment re-colors what's under it, through its own mask and its folders' masks, at its opacity.
         func adjusted(_ below: CIImage, by layer: ImageLayer, adjustment: LayerAdjustment, folders: Bool) -> CIImage? {
-            if folders, adjustment.kind == .lensEffects, let exact = lensExact[layer.id], exact.key == lensLatest[layer.id],
+            var changed: CIImage
+            if folders, Self.keptExactly.contains(adjustment.kind), let exact = exactAdjustments[layer.id], exact.key == exactLatest[layer.id],
                let placed = placement.place(exact.image, transform: LayerTransform(origin: .zero, size: document.size)) {
-                // Worked out with its folders, blend mode and the layers under it, without its own mask and opacity.
-                return covered(placed, over: below, by: layer, folders: false, opacity: layer.opacity)
+                changed = placed
+            } else {
+                // Lens Effects works on what's below as pixels, as the export does: the canvas places layers with nearest
+                // sampling, which its spikes' rotations would carry through, keeping hard bright pixels the export smooths.
+                var source = below
+                if adjustment.kind == .lensEffects {
+                    let page = CGRect(origin: .zero, size: document.size).applying(placement.mapping)
+                    source = placement.renderer.keep(below.cropped(to: page)) ?? below
+                }
+                guard let live = GPUAdjustment.apply(adjustment, to: source, scale: placement.scale, mapping: placement.mapping,
+                                                     hdr: hasHDR, document: session.document?.size)
+                else { return nil }
+                changed = live
             }
-            // Lens Effects works on what's below as pixels, as the export does: the canvas places layers with nearest sampling,
-            // which its spikes' rotations would carry through, keeping hard bright pixels the export smooths.
-            var source = below
-            if adjustment.kind == .lensEffects {
-                let page = CGRect(origin: .zero, size: document.size).applying(placement.mapping)
-                source = placement.renderer.keep(below.cropped(to: page)) ?? below
-            }
-            guard var changed = GPUAdjustment.apply(adjustment, to: source, scale: placement.scale, mapping: placement.mapping,
-                                                    hdr: hasHDR, document: session.document?.size)
-            else { return nil }
             // In a blend mode, the adjusted colors blend with the ones under them at full coverage, and the original
             // coverage comes back after — as LiveMaskRenderer does, so soft edges aren't thickened.
             let mode = session.displayedBlendMode(for: layer)
@@ -3316,11 +3529,11 @@ extension CanvasView {
             return image.applyingFilter("CIBlendWithAlphaMask", parameters: [kCIInputBackgroundImageKey: CIImage.empty(),
                                                                              kCIInputMaskImageKey: coverage])
         }
-        // A shape being dragged out and new text go where their layers will: just above the active layer, or new text on
-        // top when that isn't drawn (see `drawLayers`).
+        // A shape being dragged out and new text go where their layers will (see `draftPlace`), or new text on top when
+        // that is nowhere.
         var drewNewText = false
-        func drafts(after id: UUID, over image: CIImage) -> CIImage {
-            guard id == session.activeLayerID else { return image }
+        let place = draftPlace(document)
+        func drafts(over image: CIImage) -> CIImage {
             var result = image
             if let shape = shapeDraftImage(placement: placement) {
                 result = shape.composited(over: result)
@@ -3333,6 +3546,9 @@ extension CanvasView {
             }
             return result
         }
+        func drafts(after id: UUID, over image: CIImage) -> CIImage {
+            place == .above(id) ? drafts(over: image) : image
+        }
         // An adjustment layer as it's drawn: its settings, its own mask, opacity and blend mode.
         func adjustmentPrint(_ layer: ImageLayer, _ adjustment: LayerAdjustment) -> String {
             if liveMaskEdit(for: layer.id) != nil { return transient() }
@@ -3343,7 +3559,7 @@ extension CanvasView {
         prints.append("frame \(placement.mapping) \(placement.scale) \(hasHDR) \(document.size)")
         var cached = Set<UUID>()
         defer { if cachesAdjustments { adjustmentCache = adjustmentCache.filter { cached.contains($0.key) } } }
-        var result = CIImage.empty()
+        var result = place == .bottom ? drafts(over: CIImage.empty()) : CIImage.empty()
         for id in ids where !stacked.contains(id) {
             guard let layer = byID[id] else { continue }
             let mode = session.displayedBlendMode(for: layer)
@@ -3353,16 +3569,19 @@ extension CanvasView {
                 // Its folders' masks are part of what it's drawn through.
                 var folder = layer.parentID, depth = 0
                 while let current = folder, depth < 64 { _ = folderMask(current); folder = byID[current]?.parentID; depth += 1 }
-                if adjustment.kind == .lensEffects {
-                    // The exact effect doesn't hang on the layer's own mask or opacity, which go on over it as they're
-                    // painted and dragged, so neither leaves the exact one.
-                    let key = prints + ["lens \(id) \(adjustment) \(layer.transform) \(layer.effectiveOpacity(in: byID) / max(layer.opacity, 1e-6)) "
-                                        + "\(session.displayedBlendMode(for: layer))"]
-                    lensLatest[id] = key
-                    if !key.contains(where: { $0.hasPrefix("transient") }), lensExact[id]?.key != key { makeLensExact(id, key: key) }
+                if Self.keptExactly.contains(adjustment.kind), !hasHDR {
+                    // What's under it and its settings, not the frame: panning and zooming keep the picture made. Its own
+                    // mask, opacity and blend mode go on over it as they're painted and dragged, so none of them leaves it.
+                    let key = prints.filter { !$0.hasPrefix("frame ") } + ["exact \(id) \(adjustment) \(document.size)"]
+                    exactLatest[id] = key
+                    if !key.contains(where: { $0.hasPrefix("transient") }), exactAdjustments[id]?.key != key {
+                        makeExact(id, key: key, adjustment: adjustment)
+                    }
                 }
                 prints.append(adjustmentPrint(layer, adjustment))
-                if adjustment.kind == .lensEffects { prints.append(lensExact[id]?.key == lensLatest[id] ? "exact" : "quick") }
+                if Self.keptExactly.contains(adjustment.kind) {
+                    prints.append(exactAdjustments[id]?.key == exactLatest[id] ? "exact" : "live")
+                }
                 let steady = !prints.contains { $0.hasPrefix("transient") }
                 if cachesAdjustments, steady, let entry = adjustmentCache[id], entry.key == prints {
                     result = entry.image
@@ -3398,11 +3617,13 @@ extension CanvasView {
                         prints.append("layer \(childID) \(session.displayedBlendMode(for: child))")
                         group = GPUBlend.blend(image, over: group, mode: session.displayedBlendMode(for: child))
                     } else if unsupported { return nil }
-                    group = drafts(after: childID, over: group)
+                    // Over the top of the stack, the new layer won't be clipped: it goes over the stack, below.
+                    if childID != children.last { group = drafts(after: childID, over: group) }
                 }
                 let stack = group.applyingFilter("CIBlendWithAlphaMask", parameters: [kCIInputBackgroundImageKey: CIImage.empty(),
                                                                                        kCIInputMaskImageKey: base])
                 result = GPUBlend.blend(clippedByFolders(id, stack), over: result, mode: mode)
+                if let top = children.last { result = drafts(after: top, over: result) }
                 continue
             }
             // A layer masked by another's coverage, outside a clipping stack.

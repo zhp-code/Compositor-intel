@@ -72,6 +72,7 @@ Break one of these and Compositor refuses the whole file **without any message**
 - **Blend modes are spelled exactly** as Compositor names them: `Normal`, `Darken`, `Multiply`, `Color Burn`, `Linear Burn`, `Lighten`, `Screen`, `Color Dodge`, `Linear Dodge (Add)`, `Overlay`, `Soft Light`, `Hard Light`, `Vivid Light`, `Linear Light`, `Pin Light`, `Hard Mix`, `Difference`, `Exclusion`, `Subtract`, `Divide`, `Hue`, `Saturation`, `Color`, `Luminosity`.
 - **Every layer the manifest names has its image in place**, and the manifest is valid JSON.
 - **A line's `lineStyle` and `lineCap` need a manifest `version` of at least 15**, and only a `shape` of kind `Line` may carry them: `lineStyle` is `Solid`, `Dashed`, `Long Dash` or `Dotted`, and `lineCap` is `Square` or `Round`.
+- **A rectangle or ellipse's inside stroke needs a manifest `version` of at least 22.** `strokeWidth` is its thickness in document pixels (above 0, at most 5000) and `strokeRed`, `strokeGreen` and `strokeBlue` are 0–1. Leave them out for no stroke. A line cannot carry them.
 
 ## Writing safely while the project is open
 
@@ -129,7 +130,7 @@ An adjustment layer has an `adjustment` object and no `imageFile`, and it affect
 ```
 
 - `ranges` and `channels` run RGB, then red, green, blue. Curve points run from x 0 to x 255, in increasing x.
-- `kind` is one of `Hue/Saturation`, `Levels`, `Curves`, `Exposure`, `Gradient Map`, `Grain`, `Invert`, `Black & White`, `Color Balance`, `Gaussian Blur`, `Motion Blur`, `Add Noise`, from manifest `version` 16 `Progressive Blur`, `Bloom / Glow` and `RGB Split`, from 18 `Vignette`, `Lens Effects` and `Tonal Contrast`, and from 19 `Sharpen`, whose settings go in a `filterLayerSettings` object (fields and ranges in [project-format.md](project-format.md), versions 16, 18, 19 and 20).
+- `kind` is one of `Hue/Saturation`, `Levels`, `Curves`, `Exposure`, `Gradient Map`, `Grain`, `Invert`, `Black & White`, `Color Balance`, `Gaussian Blur`, `Motion Blur`, `Add Noise`, from manifest `version` 16 `Progressive Blur`, `Bloom / Glow` and `RGB Split`, from 18 `Vignette`, `Lens Effects` and `Tonal Contrast`, from 19 `Sharpen`, and from 21 `Reduce Noise`, whose settings go in a `filterLayerSettings` object (fields and ranges in [project-format.md](project-format.md), versions 16, 18, 19, 20 and 21).
 - For Hue/Saturation, set `hue`, `saturation` and `lightness` on the adjustment itself. Color Balance takes a `colorBalanceSettings` object (`shadowCyanRed`, `shadowMagentaGreen`, `shadowYellowBlue`, and the same for `mid` and `highlight`, each −100 to 100, plus `preserveLuminosity`).
 - For the other kinds, the easiest way to get the exact shape is to add one in Compositor, save, and copy it from that project's manifest.
 

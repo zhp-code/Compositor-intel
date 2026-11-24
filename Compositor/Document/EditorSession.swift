@@ -165,13 +165,23 @@ final class EditorSession {
     @ObservationIgnored private var gifFrameSelectionRequestID: UUID?
 
     /// Frame navigation stays in runtime state; pixel edits are immutable assets stored on the animation.
+    /// A shape color being chosen is drawn in place of the committed pixels and is not part of the saved document.
     func displayedAsset(for layer: ImageLayer) -> ImportedImage? {
+        let saved = savedAsset(for: layer)
+        if let preview = shapeColorPreview, preview.layerID == layer.id, let saved {
+            return ImportedImage(image: preview.image, thumbnail: saved.thumbnail, name: saved.name)
+        }
+        return saved
+    }
+
+    /// The asset a save writes: the committed layer, or a GIF frame, never a shape-color preview.
+    func savedAsset(for layer: ImageLayer) -> ImportedImage? {
         guard let timeline = gifTimeline(for: layer) else { return layer.asset }
         return layer.gifAnimation?.framePixels[timeline.selectedFrameIndex] ?? timeline.displayedAsset ?? layer.asset
     }
 
     func displayedLayer(for layer: ImageLayer) -> ImageLayer {
-        guard gifTimeline(for: layer) != nil, let asset = displayedAsset(for: layer) else { return layer }
+        guard let asset = displayedAsset(for: layer), asset.image !== layer.asset?.image else { return layer }
         var displayed = layer
         displayed.asset = asset
         return displayed
@@ -206,6 +216,22 @@ final class EditorSession {
     var effectSelection: LayerEffectSelection?
     @ObservationIgnored var effectsPreviews = EffectsPreviewCache()
     var projectURL: URL?
+    /// The image file the document began as, opened or dropped into an empty window: until the document is saved as a
+    /// project, Export offers that file's name, folder and format, so editing a PNG and writing it back is quick.
+    @ObservationIgnored var sourceImageURL: URL?
+    /// Where the Layers panel is in its window (top-left origin): a layer dragged in the list stays in the list until
+    /// the pointer leaves the panel.
+    @ObservationIgnored var layersPanelFrame: CGRect = .zero
+    /// Where the panel's blend and opacity controls are, likewise: a row dragged up over them stays the list's, and
+    /// above them it leaves the list.
+    @ObservationIgnored var layerControlsFrame: CGRect = .zero
+    /// A layer drag is under way that may leave the list for the system's drag (above the panel's controls, or out of
+    /// the panel): set as the row is picked up, so the controls are ready to take it back for the list if it returns
+    /// over them (`LayerDropForwarder`), and cleared as it ends.
+    var layerDragIsOutside = false
+    /// The list, and the dragged row as it draws it, for `LayerDropForwarder`.
+    @ObservationIgnored weak var layerList: NSTableView?
+    @ObservationIgnored var layerDragImage: NSImage?
     /// Blocks overlapping edits immediately. Not observed by the UI: controls only dim via
     /// `showsBusy`, after an operation has run long enough to be worth showing, so quick
     /// edits (invert, fills, stroke commits) never flash the interface.
@@ -220,23 +246,28 @@ final class EditorSession {
             updateBusyIndicator()
         }
     }
-    /// True once `isProjectBusy` has lasted longer than `busyIndicatorDelay`.
-    private(set) var showsBusy = false
+    /// True once `isProjectBusy` has lasted longer than `busyIndicatorDelay`. Reading it also watches for a quicker
+    /// operation ending, which `isProjectBusy`, not observed, can't tell the UI: a menu drawn during a Magic Wand click
+    /// that selected what was already selected kept Deselect dimmed, with nothing after it to redraw the menu.
+    var showsBusy: Bool { _ = quickOperationsEnded; return busyShowing }
+    private var busyShowing = false
+    private var quickOperationsEnded = 0
     static let busyIndicatorDelay: Duration = .milliseconds(250)
     @ObservationIgnored private var busyIndicatorTask: Task<Void, Never>?
     private func updateBusyIndicator() {
         if isProjectBusy {
-            guard busyIndicatorTask == nil, !showsBusy else { return }
+            guard busyIndicatorTask == nil, !busyShowing else { return }
             busyIndicatorTask = Task { @MainActor [weak self] in
                 try? await Task.sleep(for: Self.busyIndicatorDelay)
                 guard let self, !Task.isCancelled, self.isProjectBusy else { return }
-                self.showsBusy = true
+                self.busyShowing = true
                 self.busyIndicatorTask = nil
             }
         } else {
+            if busyIndicatorTask != nil { quickOperationsEnded += 1 }
             busyIndicatorTask?.cancel()
             busyIndicatorTask = nil
-            if showsBusy { showsBusy = false }
+            if busyShowing { busyShowing = false }
         }
     }
     private var projectWaiters: [CheckedContinuation<Void, Never>] = []
@@ -275,6 +306,10 @@ final class EditorSession {
     @ObservationIgnored var distortEffectsCache: [UUID: DistortEffectsCache] = [:]
     /// Document positions a move has just snapped to, drawn as guides while it lasts.
     @ObservationIgnored var snapGuides: (xs: [CGFloat], ys: [CGFloat]) = ([], [])
+    /// Pixel gaps the Move tool shows while a layer is dragged, or with Command held over another layer.
+    @ObservationIgnored var distanceLines: [DistanceLine] = []
+    /// A Move tool resize or rotation in progress: the layer's size or angle, and where the pointer is, in document pixels.
+    @ObservationIgnored var resizeSize: (text: String, corner: CGPoint)?
     /// Crop, resize and selection moves follow View › Snap (⇧⌘;) too: they had a Snap item of their own, which left
     /// the View menu with two called Snap.
     var snappingEnabled: Bool {
@@ -289,6 +324,9 @@ final class EditorSession {
     @ObservationIgnored var brushPointer: CGPoint?
     /// The pen's latest pressure in this stroke; 1 for a mouse. Events that carry none (the release) keep it.
     @ObservationIgnored var brushPressure: CGFloat = 1
+    /// Every point the stroke in progress has been given, with its pressure, so it can be painted again from the start
+    /// (see `restartBrush`).
+    @ObservationIgnored var brushInput: [(point: CGPoint, pressure: CGFloat)] = []
     @ObservationIgnored var maskDistortPreviewCache: MaskDistortPreviewCache?
     /// The last rounded rectangle drawn for a transform in progress, by layer, with the size it was drawn at.
     @ObservationIgnored var shapeTransformPreviewCache: [UUID: (size: CGSize, image: CGImage)] = [:]
@@ -298,6 +336,9 @@ final class EditorSession {
     /// The Move tool's transform box and handles (⌘H). Hidden, a drag anywhere just moves the layer;
     /// a pending ⌘T transform still shows its box.
     var showsTransformControls = ToolDefaults.bool("transformControls", true) { didSet { ToolDefaults.set(showsTransformControls, "transformControls") } }
+    /// The selection whose outline ⌘H hid (outside the Move tool). It still limits painting and adjustments; any other
+    /// selection, or none, shows its outline again, so a new one is never invisible.
+    var hiddenSelectionEdges: DocumentSelection?
     /// The copies an Option-drag made, and what was selected before it, so Escape can take them away again.
     @ObservationIgnored var transformDuplicate: (copies: [UUID], source: Set<UUID>, primary: UUID?)?
     var brushSettings = BrushSettings() { didSet { refreshGradient() } }
@@ -340,6 +381,16 @@ final class EditorSession {
     /// A Line shape's dash pattern and the finish on its ends (and on each dash).
     var shapeLineStyle = ShapeLineStyle.solid
     var shapeLineCap = ShapeLineCap.square
+    /// The next rectangle or ellipse's inside stroke. 0 draws none, which is how every shape started.
+    var shapeStrokeWidth: Double = 0
+    var shapeStrokeColor = PaletteColor.black
+    /// A fill picked in the Shape bar, and the foreground color when it was: the next shape uses it until the
+    /// foreground changes. Otherwise the next shape is the foreground color.
+    var shapeFillChoice: (fill: PaletteColor, foreground: PaletteColor)?
+    /// The layer whose stroke or radius a drag is changing, so the drag is one undo step.
+    var shapeStyleEditLayerID: UUID?
+    /// The preview drawn while a shape's fill or stroke color is being chosen. Not part of the document or its history.
+    var shapeColorPreview: (layerID: UUID, image: CGImage)?
     /// The shape being dragged out with the Shape tool, before it becomes a layer.
     var shapeDraft: ShapeDraft?
     var selectionModeChoice = SelectionMode.replace
@@ -375,7 +426,6 @@ final class EditorSession {
     @ObservationIgnored var previewZoom: ((PreviewZoomCommand) -> Void)?
     /// The text's style before the font menu started previewing faces on it (see `previewFont`).
     @ObservationIgnored var fontPreviewOriginal: LayerTextStyle?
-    var selectionFeatherAmount = 2
     var wandSettings = WandSettings()
     var objectSelectionSettings = ObjectSelectionSettings()
     var showsPixelGrid = ToolDefaults.bool("pixelGrid", true) { didSet { ToolDefaults.set(showsPixelGrid, "pixelGrid") } }
@@ -408,8 +458,15 @@ final class EditorSession {
             ToolDefaults.set(gridAppearance.opacity, "gridOpacity")
         }
     }
-    /// User guides. Hidden extras do not snap.
-    var showsGuides = ToolDefaults.bool("guides", true) { didSet { ToolDefaults.set(showsGuides, "guides") } }
+    /// User guides, as View › Show › Guides (⌘;) and ⌘H leave them. Hidden guides do not snap. Turning them on, or making
+    /// a guide, also brings them back from ⌘H.
+    var showsGuides: Bool {
+        get { guidesOn && !extrasHideGuides }
+        set { guidesOn = newValue; extrasHideGuides = false }
+    }
+    private var guidesOn = ToolDefaults.bool("guides", true) { didSet { ToolDefaults.set(guidesOn, "guides") } }
+    /// ⌘H's hold on the guides, for the session only, so ⌘; keeps its own setting underneath.
+    var extrasHideGuides = false
     /// F: the canvas alone on black, filling the screen, with every panel and bar put away. F again brings them back.
     var canvasOnly = false
     /// Nothing in progress for Escape to cancel (a transform, crop, lasso, shape, gradient, stroke or text), so in
@@ -427,6 +484,13 @@ final class EditorSession {
             && selectionAmountOperation == nil
     }
     var showsRulers = ToolDefaults.bool("rulers", false) { didSet { ToolDefaults.set(showsRulers, "rulers") } }
+    /// View › Show › Distances: the Move tool's pixel gaps, while dragging and with Command held.
+    var showsDistances = ToolDefaults.bool("distances", false) {
+        didSet {
+            ToolDefaults.set(showsDistances, "distances")
+            if !showsDistances { distanceLines = [] }
+        }
+    }
     /// Master snap switch (View > Snap). On so today's layer/canvas snap keeps working.
     var snapEnabled = ToolDefaults.bool("snap", true) {
         didSet {
@@ -441,9 +505,8 @@ final class EditorSession {
     var snapToDocumentBounds = ToolDefaults.bool("snapBounds", true) { didSet { ToolDefaults.set(snapToDocumentBounds, "snapBounds") } }
     var locksGuides = ToolDefaults.bool("lockGuides", false) { didSet { ToolDefaults.set(locksGuides, "lockGuides") } }
     var guideDrag: GuideDrag?
-    /// Pixels the Expand / Contract buttons grow or shrink the selection by.
-    var selectionExpandAmount = 1
-    var selectionContractAmount = 1
+    /// Pixels the Expand, Contract and Feather buttons and commands change the selection by.
+    var selectionModifyAmount = 5
     @ObservationIgnored var pendingOpacityDigit: (digit: Int, time: TimeInterval)?
     var colorPicker: ColorPickerState?
     var brushError: String?
@@ -492,6 +555,7 @@ final class EditorSession {
         if id != activeLayerID { commitTransform(); resolveGradient() }
         activeLayerID = id
         revealActiveLayer()
+        if tool == .shape { adoptShapeKindFromSelection() }
     }
     func selectTool(_ value: NavigationTool) {
         if tool != value, !finishText() { return }
@@ -507,6 +571,7 @@ final class EditorSession {
             brushSettings = settings
         }
         tool = value
+        if value == .shape { adoptShapeKindFromSelection() }
         if value.isBrushTool { _ = MetalBrushCoverage.shared }
         if value == .crop, cropRect == nil, let document {
             cropRatioChoice = "Free"
@@ -668,6 +733,14 @@ final class EditorSession {
         if let group = edit.group { return group.originals[layer.id].map { $0.following(from: group.box, to: edit.draft) } }
         return edit.layerID == layer.id ? edit.draft : nil
     }
+    /// Option-arrow with the Move tool: a copy of the selected layers, moved by the arrow's step, as an Option-drag
+    /// makes, in one undo step.
+    func duplicateAndNudgeLayer(dx: CGFloat, dy: CGFloat) {
+        beginDuplicateTransform()
+        guard transformDuplicate != nil else { return }
+        nudgeLayer(dx: dx, dy: dy)
+        commitTransform()
+    }
     func nudgeLayer(dx: CGFloat, dy: CGFloat) {
         let alreadyEditing = transformEdit != nil
         if !alreadyEditing { beginTransform(persistent: false) }
@@ -764,6 +837,8 @@ final class EditorSession {
     var canRedo: Bool { canUseHistory && history.canRedo }
 
     func undo() {
+        // A shape color that was only being previewed is not an edit, so it gets out of the way first.
+        cancelShapeColorPreview()
         // Like Photoshop, the first Undo discards a pending gradient.
         if gradientEdit != nil { cancelGradient(); return }
         guard canUndo, let snapshot = history.undo() else { return }
@@ -771,6 +846,7 @@ final class EditorSession {
     }
 
     func redo() {
+        cancelShapeColorPreview()
         guard canRedo, let snapshot = history.redo() else { return }
         restore(snapshot)
     }
@@ -793,6 +869,7 @@ final class EditorSession {
     }
 
     func endEdit() {
+        if let before = history.endingEditBefore { keepLayerDepths(since: before) }
         history.end(document: document, selection: activeLayerID)
         gifTimelinesByLayerID = gifTimelinesByLayerID.filter { $0.value.source != nil }
     }
@@ -818,18 +895,12 @@ final class EditorSession {
         return selectionAmountOperation == nil && colorRange == nil && textDraft == nil && document != nil && brushStroke == nil && warpStroke == nil && !isProjectBusy && !isImporting && !showsNewDocument && !showsImporter && renamingLayerID == nil && cropRect == nil && gradientEdit == nil && pixelMove == nil && hueSaturation == nil && levels == nil && filterEdit == nil && adjustmentEditingID == nil
     }
 
-    func addBlankLayer() {
-        guard canEditLayers, let document else { return }
-        let names = Set(document.layers.map(\.name))
-        var number = 1
-        while names.contains("Layer \(number)") { number += 1 }
-        var layer = ImageLayer(name: "Layer \(number)", blankSize: document.size)
-        layer.parentID = activeLayer?.isGroup == true ? activeLayerID : activeLayer?.parentID
-        if let parent = layer.parentID { collapsedGroupIDs.remove(parent) }
-        var insertion = document.layers.firstIndex { $0.id == activeLayerID }.map { $0 + 1 } ?? document.layers.count
-        // With a folder selected the layer goes to the top of the folder: just above its last (topmost) contents.
+    /// Where a new layer goes in `layers`: just above the active layer, or with a folder selected, at the top of the
+    /// folder — just above its last (topmost) contents. With nothing active, on top.
+    func newLayerIndex(in layers: [ImageLayer]) -> Int {
+        var insertion = layers.firstIndex { $0.id == activeLayerID }.map { $0 + 1 } ?? layers.count
         if activeLayer?.isGroup == true, let folder = activeLayerID {
-            let parents = Dictionary(uniqueKeysWithValues: document.layers.map { ($0.id, $0.parentID) })
+            let parents = Dictionary(uniqueKeysWithValues: layers.map { ($0.id, $0.parentID) })
             func isInside(_ id: UUID) -> Bool {
                 var parent = parents[id] ?? nil
                 var steps = 0
@@ -840,11 +911,27 @@ final class EditorSession {
                 }
                 return false
             }
-            if let topmost = document.layers.lastIndex(where: { isInside($0.id) }) { insertion = max(insertion, topmost + 1) }
+            if let topmost = layers.lastIndex(where: { isInside($0.id) }) { insertion = max(insertion, topmost + 1) }
         }
+        return insertion
+    }
+
+    func addBlankLayer() {
+        guard canEditLayers, let document else { return }
+        let names = Set(document.layers.map(\.name))
+        var number = 1
+        while names.contains("Layer \(number)") { number += 1 }
+        var layer = ImageLayer(name: "Layer \(number)", blankSize: document.size)
+        layer.parentID = activeLayer?.isGroup == true ? activeLayerID : activeLayer?.parentID
+        if let parent = layer.parentID { collapsedGroupIDs.remove(parent) }
+        let insertion = newLayerIndex(in: document.layers)
+        var layers = document.layers
+        layers.insert(layer, at: insertion)
+        // Added in the middle of a clipping group, it joins the group.
+        Self.adoptClipping(layer.id, in: &layers)
         beginEdit("New Blank Layer")
         defer { endEdit() }
-        self.document?.layers.insert(layer, at: insertion)
+        self.document?.layers = layers
         activeLayerID = layer.id
     }
 
@@ -879,15 +966,55 @@ final class EditorSession {
 
     func toggleLayerVisibility(_ id: UUID) {
         guard canEditLayers, let index = document?.layers.firstIndex(where: { $0.id == id }) else { return }
+        if let stack = hiddenClippingStack(of: id) {
+            beginEdit("Show Layers")
+            defer { endEdit() }
+            for layer in stack { setVisibilityInSwipe(layer, visible: true) }
+            return
+        }
         beginEdit(document?.layers[index].isVisible == true ? "Hide Layer" : "Show Layer")
         defer { endEdit() }
         document?.layers[index].isVisible.toggle()
+    }
+
+    /// A clipped layer whose base is hidden doesn't show, whatever its own eye says; its eye shows the whole stack
+    /// again, as in Photoshop: the base and every layer clipped to it. Nil when `id` isn't such a layer.
+    func hiddenClippingStack(of id: UUID) -> [UUID]? {
+        guard let layers = document?.layers, let layer = layers.first(where: { $0.id == id }),
+              let base = layer.maskSourceID, let baseLayer = layers.first(where: { $0.id == base }),
+              baseLayer.parentID == layer.parentID, !baseLayer.isVisible else { return nil }
+        return [base] + layers.filter { $0.maskSourceID == base && $0.parentID == baseLayer.parentID }.map(\.id)
+    }
+
+    /// Hide Layer / Show Layer, from the menus: the selected layers all hidden, or with the active one hidden, all
+    /// shown, as one undo step.
+    func toggleSelectedLayersVisibility() {
+        guard canEditLayers, let active = activeLayer else { return }
+        let ids = selectedLayerIDs.union([active.id])
+        let visible = !active.isVisible
+        beginEdit(visibilityTitle)
+        defer { endEdit() }
+        guard let layers = document?.layers else { return }
+        document?.layers = layers.map { layer in
+            var layer = layer
+            if ids.contains(layer.id) { layer.isVisible = visible }
+            return layer
+        }
+    }
+    /// The menus' name for `toggleSelectedLayersVisibility`.
+    var visibilityTitle: String {
+        loc((activeLayer?.isVisible == false ? "Show " : "Hide ") + (selectedLayerIDs.count > 1 ? "Layers" : "Layer"))
     }
 
     /// Photoshop's eye swipe: pressing an eye shows or hides that layer, and dragging over other eyes gives them the
     /// same state, all as one undo step (`beginEdit` at the press, `endEdit` when the button comes up).
     func beginVisibilitySwipe(_ id: UUID) -> Bool? {
         guard canEditLayers, let layer = document?.layers.first(where: { $0.id == id }) else { return nil }
+        if let stack = hiddenClippingStack(of: id) {
+            beginEdit("Show Layers")
+            for layer in stack { setVisibilityInSwipe(layer, visible: true) }
+            return true
+        }
         let visible = !layer.isVisible
         beginEdit(visible ? "Show Layer" : "Hide Layer")
         setVisibilityInSwipe(id, visible: visible)
@@ -981,8 +1108,9 @@ final class EditorSession {
             let startsDocument = document == nil
             var psdProfile: CMYKProfile?
             defer {
-                if startsDocument, document != nil, let profile = psdProfile ?? CMYK.profile(ofImageAt: url) {
-                    proofProfile = CMYK.adopt(profile)
+                if startsDocument, document != nil {
+                    if projectURL == nil { sourceImageURL = url }
+                    if let profile = psdProfile ?? CMYK.profile(ofImageAt: url) { proofProfile = CMYK.adopt(profile) }
                 }
             }
             do {
@@ -1211,6 +1339,12 @@ final class EditorSession {
     /// Opens each artboard of a Photoshop file as a document of its own; set by the workspace, which makes the tabs.
     /// Without it (no workspace), a file with artboards imports as one canvas, as one without them does.
     @ObservationIgnored var opensArtboard: ((PSDDocument, String) async -> Void)?
+    /// The layer list's Export Layers as PNGs…; set by the project controller, which shows the panels.
+    @ObservationIgnored var exportsLayers: (() async -> Void)?
+    /// While Volumetric Light's depth model is downloading or loading, the first time it's used (`DepthModel`).
+    var preparingDepth = false
+    /// Set while Convert to 8-Bit ends its edit, so `keepLayerDepths` lets it make 16-bit layers 8-bit.
+    @ObservationIgnored var convertsToEightBit = false
 
     /// One Photoshop artboard's layers as this tab's document, after the conversion report when there's anything in it.
     func importArtboard(_ parsed: PSDDocument, named name: String) async {
